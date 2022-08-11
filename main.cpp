@@ -1,99 +1,41 @@
 #include <iostream>
+#include "auth/auth.h"
 
 using namespace std;
 
+int main() {
 
+    int option;
 
-void MenuAdmin();
-void MenuUsuario();
-void InsertarPregunta();
-void ListarPreguntas();
-void ConsultarPregunta();
-void ModificarPregunta();
-void BorrarPregunta();
-int main()
-{
-    int TipoUsuario;
-    cout<<"==================>BIENVENIDO POR FAVOR INGRESE SU TIPO DE USUARIO<========================"<<endl<<endl;
+    while (option != 3) {
+        cout << "1 para login y 2 para crear 3 para salir\n";
+        cin >> option;
 
-    do
-    {
-        cout<<"SI ES ADMIN DIGITE 1 O SI ES ALUMNO DIGITE 0"<<endl;
-        cout<<"Ingrese aqui su tipo de usuario: ";cin>>TipoUsuario;
-        if(TipoUsuario!=1&&TipoUsuario!=0)
-        {
-            cout<<endl;
-            cout<<"Ingreso una opcion incorrecta"<<endl;
-            cout<<"Por favor intentelo de nuevo"<<endl;
-            cout<<endl;
+        if (option < 1 || option > 3) {
+            cout << "Porfavor, ingrese una opcion valida\n";
+            continue;
         }
 
-    }while(TipoUsuario!=1&&TipoUsuario!=0);
+        int userCreated;
 
-    if(TipoUsuario==1)
-    {
-    MenuAdmin();
+        switch (option) {
+            case 1:
+                userCreated = loginUser();
+                if (userCreated == 1) {
+                    cout << "Alguna de tu informacion es incorrecta\n";
+                    continue;
+                }
+                break;
+            case 2:
+                userCreated = createUser();
+                if (userCreated == 1) {
+                    cout << "Algo salio mal creando el usuario\n";
+                    continue;
+                }
+                break;
+        }
+
     }
-    else if(TipoUsuario==0)
-    {
-        MenuUsuario();
-    }
-	return 0;
-}
 
-void MenuAdmin()
-{
-    int opcion;
-
-	do{
-		system("cls");
-		cout << "========ADMINISTRACION BANCOS DE PREGUNTAS=========" << endl << endl;
-		cout << "1. Insertar pregunta" << endl;
-		cout << "2. Listar preguntas" << endl;
-		cout << "3. Consutar pregunta" << endl;
-		cout << "4. Modificar pregunta" << endl;
-		cout << "5. Borrar pregunta" << endl;
-		cout << "6. Salir" << endl << endl;
-		cout << "Seleccione una opcion:";
-		cin >> opcion;
-		switch (opcion){
-		  case 1: InsertarPregunta();
-		          break;
-		  case 2: ListarPreguntas();
-		          break;
-		  case 3: ConsultarPregunta();
-		          break;
-		  case 4: ModificarPregunta();
-		          break;
-		  case 5: BorrarPregunta();
-		          break;
-		}
-	}while (opcion!=6);
-}
-
-
-void MenuUsuario()
-{
-    cout<<"1. Presentar examen"<<endl;
-    cout<<"2. Ver calificaciones"<<endl;
-}
-void InsertarPregunta()
-{
-
-}
-void ListarPreguntas()
-{
-
-}
-void ConsultarPregunta()
-{
-
-}
-void ModificarPregunta()
-{
-
-}
-void BorrarPregunta()
-{
-
+    return 0;
 }
