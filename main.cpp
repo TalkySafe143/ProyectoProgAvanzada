@@ -7,6 +7,8 @@ int main() {
 
     int option;
 
+    PublicUser actualUser;
+
     while (option != 3) {
         cout << "1 para login y 2 para crear 3 para salir\n";
         cin >> option;
@@ -16,24 +18,30 @@ int main() {
             continue;
         }
 
-        int userCreated;
-
         switch (option) {
             case 1:
-                userCreated = loginUser();
-                if (userCreated == 1) {
-                    cout << "Alguna de tu informacion es incorrecta\n";
+                actualUser = loginUser();
+                if (actualUser.username[0] == '\0') {
                     continue;
                 }
                 break;
             case 2:
-                userCreated = createUser();
+                int userCreated = createUser();
                 if (userCreated == 1) {
-                    cout << "Algo salio mal creando el usuario\n";
                     continue;
                 }
                 break;
         }
+
+        char adminIndicator[3];
+
+        if (actualUser.isAdmin) {
+            strcpy(adminIndicator, "YES");
+        } else {
+            strcpy(adminIndicator, "NO");
+        }
+
+        cout << "==================== Hola de nuevo, " << actualUser.username << " ====================\t\t\tAdmin: " << adminIndicator << endl;
 
     }
 

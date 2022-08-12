@@ -23,11 +23,11 @@ int registerUser(User user) {
     checkIfFileExists(fileName);
 
     User readUser;
-    ifstream userFile(fileName, ios::binary);
+    fstream userFile(fileName, ios::binary | ios::in | ios::out);
 
     if (!userFile)
         return 2;
-    
+
     bool exist = false;
 
     while (!userFile.eof() && !exist) {
@@ -38,16 +38,14 @@ int registerUser(User user) {
         }
     }
 
-    userFile.close();
-
-    ofstream writeUsersFile(fileName, ios::binary | ios::app);
-
-    if (exist) 
+    if (exist)
         return 1;
-    
-    writeUsersFile.write((char *)&user, sizeof(user));
 
-    writeUsersFile.close();
+    userFile.clear();
+
+    userFile.write((char *)&user, sizeof(user));
+
+    userFile.close();
 
     return 0;
 }
@@ -64,13 +62,23 @@ int checkUser(User user) {
 
     ifstream userFile(fileName, ios::binary);
 
-    if (!userFile) 
+    if (!userFile)
         return 2;
 
     while (!userFile.eof()) {
         if (userFile.read((char *)&readUser, sizeof(readUser))) {
             if (strcmp(readUser.username, user.username) == 0) {
                 if (strcmp(readUser.password, user.password) == 0) {
+
+                    ofstream actualUser("./lib/actualUser.dat", ios::binary);
+
+                    if (!actualUser)
+                        return 2;
+
+                    actualUser.write((char *)&readUser, sizeof(readUser));
+
+                    actualUser.close();
+
                     return 0;
                 } else {
                     return 1;
@@ -82,6 +90,23 @@ int checkUser(User user) {
     userFile.close();
 
     return 1;
+}
+
+User getActualUser() {
+    ifstream file("./lib/actualUser.dat", ios::binary);
+
+    User actualUser;
+
+    if (!file) {
+        cout << "Ocurrio un error con el archivo\n";
+        return actualUser;
+    }
+
+    file.read((char *)&actualUser, sizeof(actualUser));
+
+    file.close();
+
+    return actualUser;
 }
 
 #endif

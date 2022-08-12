@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "./lib/user.h"
 using namespace std;
 
 void checkIfFileExists(char name[20]) {
