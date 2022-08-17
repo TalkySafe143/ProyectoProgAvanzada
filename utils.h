@@ -3,18 +3,8 @@
 
 #include <iostream>
 #include <fstream>
-#include "./lib/user.h"
-using namespace std;
+#include ".\\lib\\user.h"
 
-void checkIfFileExists(char name[20]) {
-    ifstream alreadyCreated(name, ios::binary);
-
-    if (!alreadyCreated) {
-        ofstream createFile(name, ios::binary);
-        createFile.close();
-    }
-
-    alreadyCreated.close();
-}
+void checkIfFileExists(char name[20]);
 
 #endif
