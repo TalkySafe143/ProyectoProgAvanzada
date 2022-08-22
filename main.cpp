@@ -43,23 +43,73 @@ int main() {
         	break;
 
     }
-    
-    char adminIndicator[3];
 
-    if (actualUser.isAdmin) {
-        strcpy(adminIndicator, "YES");
+
+    if(actualUser.isAdmin) {
+
+        int optionMenu;
+
+        do {
+            cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
+
+            cout << "¡Bienvenido administrador!\n";
+
+            cout << "1. Crear examen.\n";
+            cout << "2. Eliminar examen.\n";
+            cout << "3. Editar examen.\n";
+            cout << "4. Salir.\n\n";
+            cout << "Seleccione una opcion: ";
+            cin >> optionMenu;
+
+            if (optionMenu > 4 || optionMenu < 1) {
+                cout << "Ingrese una opcion valida.\n";
+                system("pause");
+                system("cls");
+                continue;
+            }
+
+        } while (optionMenu != 4);
+
     } else {
-        strcpy(adminIndicator, "NO");
+
+        int optionMenu;
+
+        do {
+
+            cout << "==================== Hola de nuevo, " << actualUser.username << " (Estudiante) ====================\n";
+
+            cout<<"\nBienvenido estudiante \n "<<endl;
+
+            cout<<"1. Presentar examen"<<endl;
+            cout<<"2. Ver resultados del examen"<<endl;
+            cout<<"3. Revisar examenes presentados"<<endl;
+            cout<<"4. Salir"<<endl;
+            cout<<"Seleccione una opcion: ";
+
+            cin>> optionMenu;
+
+            if (optionMenu > 4 || optionMenu < 1) {
+                cout << "Ingrese una opcion valida.\n";
+                system("pause");
+                system("cls");
+                continue;
+            }
+
+            /*switch (optionMenu){
+              case 1: PresentarExamen();
+                      break;
+              case 2: VerResultado();
+                      break;
+              case 3: RevisarExamen();
+                      break;
+            }*/
+        } while(optionMenu!=4);
     }
 
-    cout << "==================== Hola de nuevo, " << actualUser.username << " ====================\t\t\tAdmin: " << adminIndicator << endl;
-    
     /*
-	
-		Andres -> Hacer la interfaz para las opciones si es admin o no
-		Puede ver si es administrador con actualUser.isAdmin
-	
-	*/
+     * Hacer el sistema de Logout
+     * Arreglar la interfaz de login
+     * */
 
     return 0;
 }
