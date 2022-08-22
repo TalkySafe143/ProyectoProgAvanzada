@@ -8,3 +8,4 @@
 *.cbp
 /bin
 /obj
+/.idea
