@@ -59,7 +59,8 @@ int main() {
                     cout << "1. Crear examen.\n";
                     cout << "2. Eliminar examen.\n";
                     cout << "3. Editar examen.\n";
-                    cout << "4. Salir.\n\n";
+                    cout << "4. Modificar banco de preguntas.\n\n";
+                    cout << "5. Salir.\n\n";
                     cout << "Seleccione una opción: ";
                     cin >> optionMenu;
 

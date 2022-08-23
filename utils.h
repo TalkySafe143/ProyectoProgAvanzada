@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include ".\\lib\\user.h"
+#include ".\\lib\\User\\user.h"
 
 void checkIfFileExists(char name[20]);
 
