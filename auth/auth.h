@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string.h>
-#include "..\\lib\\user.h"
+#include "..\\lib\\User\\user.h"
 
 struct PublicUser {
     char username[40];

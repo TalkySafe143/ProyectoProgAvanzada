@@ -6,7 +6,7 @@ int registerUser(User user) {
 
     char fileName[20];
 
-    strcpy(fileName, "./lib/users.dat");
+    strcpy(fileName, ".\\lib\\files\\users.dat");
 
     checkIfFileExists(fileName);
 
@@ -42,7 +42,7 @@ int checkUser(User user) {
 
     char fileName[20];
 
-    strcpy(fileName, "./lib/users.dat");
+    strcpy(fileName, ".\\lib\\files\\users.dat");
 
     checkIfFileExists(fileName);
 
@@ -58,7 +58,7 @@ int checkUser(User user) {
             if (strcmp(readUser.username, user.username) == 0) {
                 if (strcmp(readUser.password, user.password) == 0) {
 
-                    ofstream actualUser("./lib/actualUser.dat", ios::binary);
+                    ofstream actualUser(".\\lib\\files\\actualUser.dat", ios::binary);
 
                     if (!actualUser)
                         return 2;
@@ -81,7 +81,7 @@ int checkUser(User user) {
 }
 
 User getActualUser() {
-    ifstream file("./lib/actualUser.dat", ios::binary);
+    ifstream file(".\\lib\\files\\actualUser.dat", ios::binary);
 
     User actualUser;
 

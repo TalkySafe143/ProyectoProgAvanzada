@@ -9,3 +9,5 @@
 /bin
 /obj
 /.idea
+/lib/files
+/cmake-build-debug

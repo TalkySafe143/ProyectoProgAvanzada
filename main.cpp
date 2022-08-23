@@ -5,6 +5,8 @@ using namespace std;
 
 int main() {
 
+    setlocale(LC_ALL, "");
+
     int option;
 
     PublicUser actualUser;
@@ -12,11 +14,16 @@ int main() {
 	bool isLogged = false;
 
     while (option != 3) {
-        cout << "1 para login y 2 para crear 3 para salir\n";
+        system("cls");
+        cout << "================ Bienvenido al sistema de presentación de exámenes ================\n\n";
+        cout << "1. Para entrar con tu usuario!\n";
+        cout << "2. Crear un nuevo usuario!\n";
+        cout << "3. Salir del sistema\n\n";
+        cout << "Seleccione una opción: ";
         cin >> option;
 
         if (option < 1 || option > 3) {
-            cout << "Porfavor, ingrese una opcion valida\n";
+            cout << "Por favor, ingrese una opción valida\n";
             continue;
         }
 
@@ -39,77 +46,69 @@ int main() {
         if (option == 3)
         	return 0;
         
-        if (isLogged)
-        	break;
+        if (isLogged) {
+            if (actualUser.isAdmin) {
 
-    }
+                int optionMenu;
 
+                do {
+                    cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
 
-    if(actualUser.isAdmin) {
+                    cout << "¡Bienvenido administrador!\n";
 
-        int optionMenu;
+                    cout << "1. Crear examen.\n";
+                    cout << "2. Eliminar examen.\n";
+                    cout << "3. Editar examen.\n";
+                    cout << "4. Salir.\n\n";
+                    cout << "Seleccione una opción: ";
+                    cin >> optionMenu;
 
-        do {
-            cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
+                    if (optionMenu > 4 || optionMenu < 1) {
+                        cout << "Ingrese una opción valida.\n";
+                        system("pause");
+                        system("cls");
+                        continue;
+                    }
 
-            cout << "Â¡Bienvenido administrador!\n";
+                    if (optionMenu == 4) {
+                        isLogged = false;
+                    }
 
-            cout << "1. Crear examen.\n";
-            cout << "2. Eliminar examen.\n";
-            cout << "3. Editar examen.\n";
-            cout << "4. Salir.\n\n";
-            cout << "Seleccione una opcion: ";
-            cin >> optionMenu;
+                } while (optionMenu != 4);
 
-            if (optionMenu > 4 || optionMenu < 1) {
-                cout << "Ingrese una opcion valida.\n";
-                system("pause");
-                system("cls");
-                continue;
+            } else {
+
+                int optionMenu;
+
+                do {
+
+                    cout << "==================== Hola de nuevo, " << actualUser.username << " (Estudiante) ====================\n";
+
+                    cout<<"\nBienvenido estudiante \n "<<endl;
+
+                    cout<<"1. Presentar examen"<<endl;
+                    cout<<"2. Ver resultados del examen"<<endl;
+                    cout<<"3. Revisar exámenes presentados"<<endl;
+                    cout<<"4. Salir\n"<<endl;
+                    cout<<"Seleccione una opción: ";
+
+                    cin>> optionMenu;
+
+                    if (optionMenu > 4 || optionMenu < 1) {
+                        cout << "Ingrese una opción valida.\n";
+                        system("pause");
+                        system("cls");
+                        continue;
+                    }
+
+                    if (optionMenu == 4) {
+                        isLogged = false;
+                    }
+
+                } while(optionMenu!=4);
             }
-
-        } while (optionMenu != 4);
-
-    } else {
-
-        int optionMenu;
-
-        do {
-
-            cout << "==================== Hola de nuevo, " << actualUser.username << " (Estudiante) ====================\n";
-
-            cout<<"\nBienvenido estudiante \n "<<endl;
-
-            cout<<"1. Presentar examen"<<endl;
-            cout<<"2. Ver resultados del examen"<<endl;
-            cout<<"3. Revisar examenes presentados"<<endl;
-            cout<<"4. Salir"<<endl;
-            cout<<"Seleccione una opcion: ";
-
-            cin>> optionMenu;
-
-            if (optionMenu > 4 || optionMenu < 1) {
-                cout << "Ingrese una opcion valida.\n";
-                system("pause");
-                system("cls");
-                continue;
-            }
-
-            /*switch (optionMenu){
-              case 1: PresentarExamen();
-                      break;
-              case 2: VerResultado();
-                      break;
-              case 3: RevisarExamen();
-                      break;
-            }*/
-        } while(optionMenu!=4);
+        }
     }
-
-    /*
-     * Hacer el sistema de Logout
-     * Arreglar la interfaz de login
-     * */
 
     return 0;
 }

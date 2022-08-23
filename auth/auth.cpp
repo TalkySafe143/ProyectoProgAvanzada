@@ -4,17 +4,20 @@ using namespace std;
 
 int createUser() {
     User userToCreate;
+
+    system("cls");
+
     cout << "====================================== CREAR USUARIO ======================================\n";
 
-    cout << "Por favor, ingrese un nombre de usuario (40 caracteres): ";
+    cout << "\nPor favor, ingrese un nombre de usuario (40 caracteres): ";
     cin.ignore();
     cin.getline(userToCreate.username, sizeof(userToCreate.username));
-    cout << "Por favor, ingrese una contraseña: ";
+    cout << "\nPor favor, ingrese una contrase�a: ";
     cin.getline(userToCreate.password, sizeof(userToCreate.password));
 
     int admin = 3;
     while (admin != 1 && admin != 0) {
-        cout << "¿Es administrador del sistema? [Ingrese 0 no es administrador, de lo contrario ingrese 1]: ";
+        cout << "�Eres administrador? [YES -> 1 | NO -> 0]: ";
         cin >> admin;
     }
 
@@ -51,12 +54,14 @@ int createUser() {
 PublicUser loginUser() {
     User userToQuery;
 
+    system("cls");
+
     cout << "====================================== INGRESAR  ======================================\n";
 
-    cout << "Por favor, ingrese su nombre de usuario: ";
+    cout << "\nPor favor, ingrese su nombre de usuario: ";
     cin.ignore();
     cin.getline(userToQuery.username, sizeof(userToQuery.username));
-    cout << "Por favor, ingrese su contraseña: ";
+    cout << "\nPor favor, ingrese su contraseña: ";
     cin.getline(userToQuery.password, sizeof(userToQuery.password));
 
     int confirm = checkUser(userToQuery);
