@@ -4,9 +4,11 @@ using namespace std;
 
 int registerUser(User user) {
 
-    char fileName[20];
+    char *fileName = new char[20];
 
     strcpy(fileName, ".\\lib\\files\\users.dat");
+
+
 
     checkIfFileExists(fileName);
 

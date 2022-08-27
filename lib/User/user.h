@@ -7,8 +7,8 @@
 #include "..\\..\\utils.h"
 
 struct User {
-    char username[40];
-    char password[40];
+    char *username;
+    char *password;
     bool isAdmin;
 };
 
@@ -16,6 +16,6 @@ int registerUser(User user);
 
 int checkUser(User user);
 
-User getActualUser();
+void getActualUser();
 
 #endif
