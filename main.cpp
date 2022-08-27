@@ -64,7 +64,7 @@ int main() {
                     cout << "Seleccione una opción: ";
                     cin >> optionMenu;
 
-                    if (optionMenu > 4 || optionMenu < 1) {
+                    if (optionMenu > 5 || optionMenu < 1) {
                         cout << "Ingrese una opción valida.\n";
                         system("pause");
                         system("cls");

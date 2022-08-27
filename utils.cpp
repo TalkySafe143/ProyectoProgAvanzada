@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void checkIfFileExists(char name[20]) {
+void checkIfFileExists(char *name) {
     ifstream alreadyCreated(name, ios::binary);
 
     if (!alreadyCreated) {

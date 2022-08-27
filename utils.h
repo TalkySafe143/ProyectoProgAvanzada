@@ -5,6 +5,6 @@
 #include <fstream>
 #include ".\\lib\\User\\user.h"
 
-void checkIfFileExists(char name[20]);
+void checkIfFileExists(char *name);
 
 #endif
