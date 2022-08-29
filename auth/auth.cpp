@@ -5,11 +5,14 @@ using namespace std;
 int createUser() {
     User userToCreate;
 
+    userToCreate.username = new char[30];
+    userToCreate.password = new char[30];
+
     system("cls");
 
     cout << "====================================== CREAR USUARIO ======================================\n";
 
-    cout << "\nPor favor, ingrese un nombre de usuario (40 caracteres): ";
+    cout << "\nPor favor, ingrese un nombre de usuario (30 caracteres): ";
     cin.ignore();
     cin.getline(userToCreate.username, sizeof(userToCreate.username));
     cout << "\nPor favor, ingrese una contraseña: ";
@@ -28,6 +31,9 @@ int createUser() {
     }
 
     int confirm = registerUser(userToCreate);
+
+    delete [] userToCreate.username;
+    delete [] userToCreate.password;
 
     switch (confirm) {
         case 0:
@@ -54,6 +60,9 @@ int createUser() {
 PublicUser loginUser() {
     User userToQuery;
 
+    userToQuery.username = new char[30];
+    userToQuery.password = new char[30];
+
     system("cls");
 
     cout << "====================================== INGRESAR  ======================================\n";
@@ -62,12 +71,18 @@ PublicUser loginUser() {
     cin.ignore();
     cin.getline(userToQuery.username, sizeof(userToQuery.username));
     cout << "\nPor favor, ingrese su contraseÃ±a: ";
+    cin.ignore();
     cin.getline(userToQuery.password, sizeof(userToQuery.password));
 
     int confirm = checkUser(userToQuery);
 
+    delete [] userToQuery.username;
+    delete [] userToQuery.password;
+
     User actualUser;
     PublicUser result;
+
+    result.username = new char[30];
 
     switch (confirm) {
         case 0:
@@ -79,6 +94,9 @@ PublicUser loginUser() {
 
             strcpy(result.username, actualUser.username);
             result.isAdmin = actualUser.isAdmin;
+
+            delete [] actualUser.username;
+            delete [] actualUser.password;
 
             return result;
             break;

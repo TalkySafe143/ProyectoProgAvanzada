@@ -71,3 +71,26 @@ void resizeCharArray(char *arr){
 
     arr = temp;
 }
+
+User getUserMembers(char *line, User read) {
+
+    char *p = strtok(line, ";");
+
+    for (int i = 1; i <= 3; i++) {
+        switch (i) {
+            case 1:
+                strcpy(read.username, p);
+                break;
+            case 2:
+                strcpy(read.password, p);
+                break;
+            case 3:
+                if (*(p + 0) == '0') {
+                    read.isAdmin = false;
+                } else {
+                    read.isAdmin = true;
+                }
+                break;
+        }
+    }
+}

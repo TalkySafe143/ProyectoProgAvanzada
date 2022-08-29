@@ -72,6 +72,7 @@ int main() {
                     }
 
                     if (optionMenu == 4) {
+                        delete [] actualUser.username;
                         isLogged = false;
                     }
 
@@ -103,6 +104,7 @@ int main() {
                     }
 
                     if (optionMenu == 4) {
+                        delete [] actualUser.username;
                         isLogged = false;
                     }
 

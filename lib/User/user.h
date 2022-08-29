@@ -3,9 +3,16 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <string.h>
 #include "..\\..\\utils.h"
-
+/*
+ * TXT FORMAT
+ *
+ * username;password;isAdmin
+ *
+ * isAdmin -> 0/false or 1/true
+ * */
 struct User {
     char *username;
     char *password;
@@ -16,6 +23,6 @@ int registerUser(User user);
 
 int checkUser(User user);
 
-void getActualUser();
+User getActualUser();
 
 #endif

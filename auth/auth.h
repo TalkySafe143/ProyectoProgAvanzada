@@ -6,7 +6,7 @@
 #include "..\\lib\\User\\user.h"
 
 struct PublicUser {
-    char username[40];
+    char *username;
     bool isAdmin;
 };
 
