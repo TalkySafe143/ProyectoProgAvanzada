@@ -5,18 +5,17 @@ using namespace std;
 int createUser() {
     User userToCreate;
 
-    userToCreate.username = new char[30];
-    userToCreate.password = new char[30];
+    userToCreate.username = new char[CHAR_ARRAY_LENGTH];
+    userToCreate.password = new char[CHAR_ARRAY_LENGTH];
 
     system("cls");
 
     cout << "====================================== CREAR USUARIO ======================================\n";
-
     cout << "\nPor favor, ingrese un nombre de usuario (30 caracteres): ";
     cin.ignore();
-    cin.getline(userToCreate.username, sizeof(userToCreate.username));
+    cin.getline(userToCreate.username, CHAR_ARRAY_LENGTH);
     cout << "\nPor favor, ingrese una contraseña: ";
-    cin.getline(userToCreate.password, sizeof(userToCreate.password));
+    cin.getline(userToCreate.password, CHAR_ARRAY_LENGTH);
 
     int admin = 3;
     while (admin != 1 && admin != 0) {
@@ -60,8 +59,8 @@ int createUser() {
 PublicUser loginUser() {
     User userToQuery;
 
-    userToQuery.username = new char[30];
-    userToQuery.password = new char[30];
+    userToQuery.username = new char[CHAR_ARRAY_LENGTH];
+    userToQuery.password = new char[CHAR_ARRAY_LENGTH];
 
     system("cls");
 
@@ -69,10 +68,9 @@ PublicUser loginUser() {
 
     cout << "\nPor favor, ingrese su nombre de usuario: ";
     cin.ignore();
-    cin.getline(userToQuery.username, sizeof(userToQuery.username));
+    cin.getline(userToQuery.username, CHAR_ARRAY_LENGTH);
     cout << "\nPor favor, ingrese su contraseÃ±a: ";
-    cin.ignore();
-    cin.getline(userToQuery.password, sizeof(userToQuery.password));
+    cin.getline(userToQuery.password, CHAR_ARRAY_LENGTH);
 
     int confirm = checkUser(userToQuery);
 
@@ -82,7 +80,7 @@ PublicUser loginUser() {
     User actualUser;
     PublicUser result;
 
-    result.username = new char[30];
+    result.username = new char[CHAR_ARRAY_LENGTH];
 
     switch (confirm) {
         case 0:

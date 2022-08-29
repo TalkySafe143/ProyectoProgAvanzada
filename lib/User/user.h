@@ -6,6 +6,7 @@
 #include <string>
 #include <string.h>
 #include "..\\..\\utils.h"
+#define CHAR_ARRAY_LENGTH 30
 /*
  * TXT FORMAT
  *

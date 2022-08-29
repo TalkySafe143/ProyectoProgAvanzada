@@ -71,12 +71,12 @@ int main() {
                         continue;
                     }
 
-                    if (optionMenu == 4) {
+                    if (optionMenu == 5) {
                         delete [] actualUser.username;
                         isLogged = false;
                     }
 
-                } while (optionMenu != 4);
+                } while (optionMenu != 5);
 
             } else {
 

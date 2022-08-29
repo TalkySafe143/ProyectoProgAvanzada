@@ -56,14 +56,14 @@ int resizeExamArray(Exam *arr, int length){
     return length + 1;
 
 }
-
+/*
 void resizeCharArray(char *arr){
 
-    int length = strlen(arr) + 1;
+    int length = (int)strlen(arr);
 
     char *temp = new char[length];
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i <= length; i++) {
         *(temp + i) = *(arr + i);
     }
 
@@ -71,10 +71,16 @@ void resizeCharArray(char *arr){
 
     arr = temp;
 }
-
+*/
 User getUserMembers(char *line, User read) {
 
-    char *p = strtok(line, ";");
+    char *lineCopy = new char[strlen(line)+1];
+
+    for (int i = 0; i <= strlen(line); i++) {
+        *(lineCopy + i) = *(line + i);
+    }
+
+    char *p = strtok(lineCopy, ";");
 
     for (int i = 1; i <= 3; i++) {
         switch (i) {
@@ -92,5 +98,8 @@ User getUserMembers(char *line, User read) {
                 }
                 break;
         }
+        p = strtok(NULL, ";");
     }
+    delete [] lineCopy;
+    return read;
 }

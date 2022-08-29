@@ -4,18 +4,20 @@ using namespace std;
 
 int registerUser(User user) {
 
-    char *fileName = new char[20];
+    char *fileName = new char[30];
 
     strcpy(fileName, ".\\lib\\files\\users.txt");
-
-    resizeCharArray(fileName);
 
     checkIfFileExists(fileName);
 
     fstream userFile(fileName, ios::in | ios::out | ios::app);
 
-    if (!userFile)
+    delete [] fileName;
+
+
+    if (!userFile) {
         return 2;
+    }
 
     bool exist = false;
 
@@ -23,14 +25,18 @@ int registerUser(User user) {
 
     while (!userFile.eof() && !exist) {
 
-        userFile.getline(read, sizeof(read));
+        userFile.getline(read, 70);
+
+        if (strcmp(read, "") == 0) {
+            continue;
+        }
 
         User readingUser;
 
-        readingUser.username = new char[30];
-        readingUser.password = new char[30];
+        readingUser.username = new char[CHAR_ARRAY_LENGTH];
+        readingUser.password = new char[CHAR_ARRAY_LENGTH];
 
-        getUserMembers(read, readingUser);
+        readingUser = getUserMembers(read, readingUser);
 
         if (strcmp(readingUser.username, user.username) == 0) {
             exist = true;
@@ -38,7 +44,6 @@ int registerUser(User user) {
 
         delete [] readingUser.username;
         delete [] readingUser.password;
-
     }
 
     delete [] read;
@@ -48,45 +53,42 @@ int registerUser(User user) {
 
     userFile.clear();
 
-    userFile << user.username << ";" << user.password << ";" << user.isAdmin << "\n";
+    userFile << user.username << ";" << user.password << ";" << user.isAdmin << endl;
 
     userFile.close();
-
-    delete [] fileName;
 
     return 0;
 }
 
 int checkUser(User user) {
 
-    char *fileName = new char[20];
+    char *fileName = new char[30];
 
     strcpy(fileName, ".\\lib\\files\\users.txt");
-
-    resizeCharArray(fileName);
 
     checkIfFileExists(fileName);
 
     User readUser;
 
-    readUser.username = new char[30];
-    readUser.password = new char[30];
+    readUser.username = new char[CHAR_ARRAY_LENGTH];
+    readUser.password = new char[CHAR_ARRAY_LENGTH];
 
     ifstream userFile(fileName);
 
     if (!userFile)
         return 2;
 
-    char *read = new char[63];
+    char *read = new char[70];
 
     while (!userFile.eof()) {
 
-        userFile.getline(read, sizeof(read));
+        userFile.getline(read, 70);
 
-        getUserMembers(read, readUser);
+        if (strcmp(read, "") == 0) {
+            continue;
+        }
 
-        cout << readUser.username << " Es el usuario del archivo" << endl;
-        cout << user.username << " Es el usuario del usuario" << endl;
+        readUser = getUserMembers(read, readUser);
 
         if (strcmp(readUser.username, user.username) == 0) {
             if (strcmp(readUser.password, user.password) == 0) {
@@ -141,21 +143,25 @@ User getActualUser() {
 
     User actualUser;
 
-    actualUser.username = new char[30];
-    actualUser.password = new char[30];
+    actualUser.username = new char[CHAR_ARRAY_LENGTH];
+    actualUser.password = new char[CHAR_ARRAY_LENGTH];
 
     if (!file) {
         cout << "Ocurrio un error con el archivo\n";
         return actualUser;
     }
 
-    char *read = new char[63];
+    char *read = new char[70];
 
     while (!file.eof()) {
 
-        file.getline(read, sizeof(read));
+        file.getline(read, 70);
 
-        getUserMembers(read, actualUser);
+        if (strcmp(read, "") == 0) {
+            continue;
+        }
+
+        actualUser = getUserMembers(read, actualUser);
     }
 
     delete [] read;
