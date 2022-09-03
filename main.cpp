@@ -10,9 +10,7 @@ int main() {
     int option;
 
     PublicUser actualUser;
-    // pirobos :)
-    // Sapo hpta no me hable asi
-    
+
 	bool isLogged = false;
 
     while (option != 3) {
