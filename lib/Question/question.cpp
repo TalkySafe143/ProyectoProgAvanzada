@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void getQuestion(int id){};
+Question getQuestion(int id){};
 
 void createQuestion(Question newQuestion){};
 

@@ -11,11 +11,11 @@ struct Option {
 struct Question {
     int ID;
     char statement[500];
-    Option options[4];
+    Option options[4]; // Convertirlo en dinamico
     Option correctOption;
 };
 
-void getQuestion(int id);
+Question getQuestion(int id);
 
 void createQuestion(Question newQuestion);
 

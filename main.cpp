@@ -71,11 +71,16 @@ int main() {
                         continue;
                     }
 
-                    if (optionMenu == 4) {
+                    if (optionMenu == 5) {
                         isLogged = false;
                     }
 
-                } while (optionMenu != 4);
+                    /*
+                     * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
+                     * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
+                     * */
+
+                } while (optionMenu != 5);
 
             } else {
 
@@ -105,6 +110,10 @@ int main() {
                     if (optionMenu == 4) {
                         isLogged = false;
                     }
+
+                    /*
+                     * TODO: Implementar el folder de student/
+                     * */
 
                 } while(optionMenu!=4);
             }
