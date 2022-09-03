@@ -11,6 +11,7 @@ int main() {
 
     PublicUser actualUser;
     // pirobos :)
+    // Sapo hpta no me hable asi
     
 	bool isLogged = false;
 
