@@ -16,6 +16,4 @@ int resizeQuestionArray(Question *arr, int length);
 
 int resizeExamArray(Exam *arr, int length);
 
-struct User getUserMembers(char *line, User read);
-
 #endif

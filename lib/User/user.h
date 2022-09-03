@@ -15,8 +15,8 @@
  * isAdmin -> 0/false or 1/true
  * */
 struct User {
-    char *username;
-    char *password;
+    char username[CHAR_ARRAY_LENGTH];
+    char password[CHAR_ARRAY_LENGTH];
     bool isAdmin;
 };
 
