@@ -10,20 +10,21 @@ int main() {
     int option;
 
     PublicUser actualUser;
+    // pirobos :)
     
 	bool isLogged = false;
 
     while (option != 3) {
         system("cls");
-        cout << "================ Bienvenido al sistema de presentación de exámenes ================\n\n";
+        cout << "================ Bienvenido al sistema de presentaciï¿½n de exï¿½menes ================\n\n";
         cout << "1. Para entrar con tu usuario!\n";
         cout << "2. Crear un nuevo usuario!\n";
         cout << "3. Salir del sistema\n\n";
-        cout << "Seleccione una opción: ";
+        cout << "Seleccione una opciï¿½n: ";
         cin >> option;
 
         if (option < 1 || option > 3) {
-            cout << "Por favor, ingrese una opción valida\n";
+            cout << "Por favor, ingrese una opciï¿½n valida\n";
             continue;
         }
 
@@ -54,18 +55,18 @@ int main() {
                 do {
                     cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
 
-                    cout << "¡Bienvenido administrador!\n";
+                    cout << "ï¿½Bienvenido administrador!\n";
 
                     cout << "1. Crear examen.\n";
                     cout << "2. Eliminar examen.\n";
                     cout << "3. Editar examen.\n";
                     cout << "4. Modificar banco de preguntas.\n\n";
                     cout << "5. Salir.\n\n";
-                    cout << "Seleccione una opción: ";
+                    cout << "Seleccione una opciï¿½n: ";
                     cin >> optionMenu;
 
                     if (optionMenu > 5 || optionMenu < 1) {
-                        cout << "Ingrese una opción valida.\n";
+                        cout << "Ingrese una opciï¿½n valida.\n";
                         system("pause");
                         system("cls");
                         continue;
@@ -94,14 +95,14 @@ int main() {
 
                     cout<<"1. Presentar examen"<<endl;
                     cout<<"2. Ver resultados del examen"<<endl;
-                    cout<<"3. Revisar exámenes presentados"<<endl;
+                    cout<<"3. Revisar exï¿½menes presentados"<<endl;
                     cout<<"4. Salir\n"<<endl;
-                    cout<<"Seleccione una opción: ";
+                    cout<<"Seleccione una opciï¿½n: ";
 
                     cin>> optionMenu;
 
                     if (optionMenu > 4 || optionMenu < 1) {
-                        cout << "Ingrese una opción valida.\n";
+                        cout << "Ingrese una opciï¿½n valida.\n";
                         system("pause");
                         system("cls");
                         continue;
