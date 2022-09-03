@@ -3,6 +3,11 @@
 
 #include <iostream>
 
+/*
+ * Adrian
+ * */
+
+
 struct Option {
     char letter;
     char sentence[50];
@@ -11,7 +16,7 @@ struct Option {
 struct Question {
     int ID;
     char statement[500];
-    Option options[4]; // Convertirlo en dinamico
+    Option options[4];
     Option correctOption;
 };
 

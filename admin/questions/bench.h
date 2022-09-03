@@ -4,7 +4,7 @@
 #include "..\\..\\lib\\Question\\question.h"
 #include "..\\..\\auth\\auth.h"
 
-void createBenchQuestion(PublicUser admin);
+void createBenchQuestion(PublicUser admin); // admin.username << Bench.dat
 
 void updateBenchQuestion(PublicUser admin);
 
