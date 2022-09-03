@@ -18,4 +18,6 @@ void updateBenchQuestion(Question update, PublicUser admin);
 // Eliminar una pregunta al banco de preguntas que esta en el archivo <admin>Bench.dat
 void deleteBenchQuestion(Question deleted, PublicUser admin);
 
+// Para la puta de andres que no quiere utilizar GIT
+
 #endif //BENCHLIB_H
