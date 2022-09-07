@@ -22,7 +22,7 @@ struct Question {
 
 Question getQuestion(int id);
 
-void createQuestion(Question newQuestion);
+void createQuestion(Question newQuestion, PublicUser admin);
 
 void updateQuestion(int id, Question questionToUpdate);
 
