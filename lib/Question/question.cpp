@@ -11,7 +11,7 @@ void getQuestion(){
     bool Encontro = false;
 
     system("cls");
-    cout << "*********CONSULTAR PREGUNTA********** \n";
+    cout << "*********CONSULTAR PREGUNTA********** \n \n";
     if(arch)
     {
         cout << "Digite el ID de la pregunta que desea consultar: ";cin >> idSearch;
@@ -79,7 +79,7 @@ void updateQuestion(){
     int idSearch, opcion;
 
     system("cls");
-    cout << "*********EDITAR PREGUNTA********** \n";
+    cout << "*********EDITAR PREGUNTA********** \n \n";
     if(arch)
     {
         cout << "Digite el ID de la pregunta que desea editar: ";cin >> idSearch;
@@ -151,4 +151,44 @@ void updateQuestion(){
     system("pause");
 }
 
-void deleteQuestion(){};
+void deleteQuestion(){
+    Question question;
+    ifstream arch("admin\questions\bench.cpp/.h", ios::binary);
+    ofstream archTemp("BancoDePreguntasTemp.dat", ios::binary);
+    int idSearch;
+    bool Encontro = false;
+
+    system("cls");
+    cout << "*********BORRAR PREGUNTA********** \n \n";
+    if(arch)
+    {
+        cout << "Digite el ID de la pregunta que desea editar: "; cin >> idSearch;
+        while(!arch.eof())
+        {
+            if(arch.read((char *)&question, sizeof(question)))
+            {
+                if(idSearch != question.ID)
+                {
+                    archTemp.write((char *)&question, sizeof(question));
+                }
+                else
+                {
+                    Encontro = true;
+                }
+            }
+        }
+        arch.close();
+        archTemp.close();
+        remove("admin\questions\bench.cpp/.h");
+        rename("BancoDePreguntasTemp.dat", "admin\questions\bench.cpp/.h");
+        if(!Encontro)
+        {
+            cout << "No existe ninguna pregunta con ese ID \n";
+        } 
+        arch.close();
+    }
+    else{
+        cout << "No se pudo abrir el archivo! \n";
+    }
+    system("pause");
+}
