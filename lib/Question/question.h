@@ -7,25 +7,46 @@
  * Adrian
  * */
 
-
-struct Option {
-    char letter;
-    char sentence[50];
-};
-
 struct Question {
     int ID;
     char statement[500];
-    Option options[4];
-    Option correctOption;
+    char OptionA[50];
+    char OptionB[50];
+    char OptionC[50];
+    char OptionD[50];
+    char correctOption[50];
 };
 
-Question getQuestion(int id);
+/*
+   Nombre: getQuestion
+   Objetivo: Consultar preguntas al archivo ........
+   Entradas: Ninguna
+   Salidas: Ninguna
+*/   
+void getQuestion();
 
-void createQuestion(Question newQuestion);
+/*
+   Nombre: createQuestion
+   Objetivo: Insertar preguntas al archivo ........
+   Entradas: Ninguna
+   Salidas: Ninguna
+*/   
+void createQuestion();
 
-void updateQuestion(int id);
+/*
+   Nombre: updateQuestion
+   Objetivo: Editar preguntas del archivo ........
+   Entradas: Ninguna
+   Salidas: Ninguna
+*/ 
+void updateQuestion();
 
-void deleteQuestion(int id);
+/*
+   Nombre: deleteQuestion
+   Objetivo: Eliminar preguntas del archivo ........
+   Entradas: Ninguna
+   Salidas: Ninguna
+*/ 
+void deleteQuestion();
 
 #endif
