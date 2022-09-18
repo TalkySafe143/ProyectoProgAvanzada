@@ -2,6 +2,10 @@
 #define QUESTION_H
 
 #include <iostream>
+#include "..\\..\\auth\\auth.h"
+#include "..\\..\\utils.h"
+#include <string.h>
+#include <fstream>
 
 /*
  * Adrian
@@ -20,33 +24,38 @@ struct Question {
 /*
    Nombre: getQuestion
    Objetivo: Consultar preguntas al archivo ........
-   Entradas: Ninguna
-   Salidas: Ninguna
+   Entradas: El administrador que esta realizando la accion
+   Salidas: La pregunta encontrada con el ID, si no se encuentra, en el "statement" va a ser '\0', si es 'fileError'
+   significa que hay un error en los archivos
 */   
-void getQuestion();
+Question getQuestion(struct PublicUser admin, int ID);
+
 
 /*
    Nombre: createQuestion
    Objetivo: Insertar preguntas al archivo ........
-   Entradas: Ninguna
-   Salidas: Ninguna
+   Entradas: El administrador que esta realizando la accion
+ * Salidas: Un entero que representa el codigo de la transaccion
+ *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
 */   
-void createQuestion();
+int createQuestion(struct PublicUser admin, Question newQuestion);
 
 /*
    Nombre: updateQuestion
    Objetivo: Editar preguntas del archivo ........
-   Entradas: Ninguna
-   Salidas: Ninguna
+   Entradas: El administrador que esta realizando la accion
+ * Salidas: Un entero que representa el codigo de la transaccion
+ *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
 */ 
-void updateQuestion();
+int updateQuestion(struct PublicUser admin, Question updatedQuestion);
 
 /*
    Nombre: deleteQuestion
    Objetivo: Eliminar preguntas del archivo ........
-   Entradas: Ninguna
-   Salidas: Ninguna
+   Entradas: El administrador que esta realizando la accion
+ * Salidas: Un entero que representa el codigo de la transaccion
+ *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
 */ 
-void deleteQuestion();
+int deleteQuestion(struct PublicUser admin, int ID);
 
 #endif

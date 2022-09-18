@@ -20,8 +20,8 @@ struct Exam {
     char ID[3];
     char name[20];
     time_t date; // https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
-    Question *questions; //  Convertirlo en dinamico [3] min
-    listStudent Student;
+    struct Question *questions; //  Convertirlo en dinamico [3] min
+    struct listStudent Student;
     char owner[40]; // admin username
     int numberQuestions;
 };
@@ -30,7 +30,7 @@ struct RegExam {
     char ID[3];
     char name[20];
     time_t date;
-    listStudent Student;
+    struct listStudent Student;
     char owner[40];
     int numberQuestions;
 };

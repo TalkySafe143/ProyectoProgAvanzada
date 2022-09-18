@@ -1,194 +1,147 @@
 #include "question.h"
-#include <string.h>
 #include <fstream>
 
 using namespace std;
 
-void getQuestion(){
+Question getQuestion(PublicUser admin, int ID){
     Question question;
-    ifstream arch("admin\questions\bench.cpp/.h", ios::binary);
-    int idSearch; 
-    bool Encontro = false;
+    Question errorQuestion;
 
-    system("cls");
-    cout << "*********CONSULTAR PREGUNTA********** \n \n";
-    if(arch)
-    {
-        cout << "Digite el ID de la pregunta que desea consultar: ";cin >> idSearch;
-        while(!arch.eof())
-        {
-            if(arch.read((char *)&question, sizeof(question)))
-            {
-                if(idSearch == question.ID)
-                {
-                    cout << question.ID << endl;
-                    cout << question.statement << endl;
-                    cout << question.OptionA << endl;
-                    cout << question.OptionB << endl;
-                    cout << question.OptionC << endl;
-                    cout << question.OptionD << endl;
-                    cout << question.correctOption << endl;
-                    Encontro = true;
-                    break;
-                }
+    char filename[150];
+
+    prepareAdminFileName(admin, filename);
+
+    checkIfFileExists(filename);
+
+    ifstream arch(filename, ios::binary);
+
+    if (!arch) {
+        strcpy(errorQuestion.statement, "fileError");
+        return errorQuestion;
+    }
+
+    while (!arch.eof()) {
+        if(arch.read((char*)&question, sizeof(question))) {
+            if (question.ID == ID) {
+                arch.close();
+                return question;
             }
         }
-        if(!Encontro)
-        {
-            cout << "No existe ninguna pregunta con ese ID \n";
-        }
-        arch.close();
     }
-    else{
-        cout << "No se pudo abrir el archivo! \n";
-    }
-    system("pause");
+
+    strcpy(errorQuestion.statement, "\0");
+
+    arch.close();
+
+    return errorQuestion;
 }
 
 
-void createQuestion(){
-    Question question;
-    ofstream arch("admin\questions\bench.cpp/.h", ios::binary|ios::app);
+int createQuestion(PublicUser admin, Question newQuestion){
+    Question question = getQuestion(admin, newQuestion.ID);
 
-    system("cls");
-    cout << "*********CREAR PREGUNTA********** \n";
-    if(arch)
-    {
-        cout << "Digite el ID de la pregunta: ";cin >> question.ID;
-        cin.ignore();
-        cout << "Digite el enunciado: ";cin.getline(question.statement, sizeof(question.statement));
-        cout << "Digite opcion A: ";cin.getline(question.OptionA, sizeof(question.OptionA));
-        cout << "Digite opcion B: ";cin.getline(question.OptionB, sizeof(question.OptionB));
-        cout << "Digite opcion C: ";cin.getline(question.OptionC, sizeof(question.OptionC));
-        cout << "Digite opcion D: ";cin.getline(question.OptionD, sizeof(question.OptionD));
-        cout << "Digite la opcion correcta";cin.getline(question.correctOption, sizeof(question.correctOption));
-        arch.write((char *)&question, sizeof(question));
-        arch.close();
+    if (strcmp(question.statement, "\0") != 0) { // Ya existe
+        return 2;
     }
-    else{
-        cout << "No se pudo abrir el archivo \n"; 
+
+    char filename[150];
+
+    prepareAdminFileName(admin, filename);
+
+    ofstream arch(filename, ios::binary|ios::app);
+
+    if (!arch) {
+        return 1;
     }
-    system("pause");
+
+    arch.write((char*)&newQuestion, sizeof(newQuestion));
+
+    arch.close();
+
+    return 0;
 }
 
 
-void updateQuestion(){
-    Question question;
-    fstream arch("admin\questions\bench.cpp/.h", ios::binary|ios::in|ios::out);
-    bool Encontro = false;
-    int idSearch, opcion;
+int updateQuestion(PublicUser admin, Question updatedQuestion){
 
-    system("cls");
-    cout << "*********EDITAR PREGUNTA********** \n \n";
-    if(arch)
-    {
-        cout << "Digite el ID de la pregunta que desea editar: ";cin >> idSearch;
-        while(!arch.eof())
-        {
-            if(arch.read((char *)&question, sizeof(question)))
-            {
-                if(idSearch == question.ID)
-                {
-                    cout << "Esta es la pregunta que se va a modificar \n\n";
-                    cout << "1. " << question.ID << endl;
-                    cout << "2. " << question.statement << endl;
-                    cout << "3. " << question.OptionA << endl;
-                    cout << "4. " << question.OptionB << endl;
-                    cout << "5. " << question.OptionC << endl;
-                    cout << "6. " << question.OptionD << endl;                    
-                    cout << "7. " << question.correctOption << endl;
-                    Encontro = true;
+    char filename[150];
 
-                    cout << "Que deseea modificar? (Digite un numero): ";cin >> opcion;
-                    cin.ignore();
-                    switch(opcion)
-                    {
-                        case 1: 
-                            cin >> question.ID;
-                            break;
-                        case 2:
-                            cin.getline(question.statement, sizeof(question.statement));
-                            break;
-                        case 3: 
-                            cin.getline(question.OptionA, sizeof(question.OptionA));
-                            break;
-                        case 4:
-                            cin.getline(question.OptionB, sizeof(question.OptionB));
-                            break;
-                        case 5:
-                            cin.getline(question.OptionC, sizeof(question.OptionC));
-                            break;
-                        case 6:
-                            cin.getline(question.OptionD, sizeof(question.OptionD));
-                            break;
-                        case 7:
-                            cin.getline(question.correctOption, sizeof(question.correctOption));
-                            break;
-                        default:
-                            cout << "Opcion invalida \n";
-                            break;
-                    }
+    prepareAdminFileName(admin, filename);
 
-                    if(opcion > 0 && opcion < 8)
-                    {
-                        arch.seekg((int)((-1)*sizeof(question)), ios::cur);
-                        arch.write((char *)&question, sizeof(question));
-                        cout << "Pregunta modificada correctamente! \n";   
-                    } 
-                    break; 
-                }
+    checkIfFileExists(filename);
+
+    fstream arch(filename, ios::binary|ios::in|ios::out);
+    bool found = false;
+
+    if (!arch)
+        return 1;
+
+    while (!arch.eof() && !found) {
+        Question readQuestion;
+        if (arch.read((char*)&readQuestion, sizeof(readQuestion))) {
+            if (readQuestion.ID == updatedQuestion.ID) {
+                found = true;
+                arch.seekg((int)(-1)*(sizeof(readQuestion)), ios::cur);
+                arch.write((char*)&updatedQuestion, sizeof(updatedQuestion));
             }
         }
-        if(!Encontro)
-        {
-            cout << "No existe ninguna pregunta con ese ID \n";
-        }
-        arch.close();
     }
-    else{
-        cout << "No se pudo abrir el archivo! \n";
-    }
-    system("pause");
+
+    arch.close();
+
+    if (!found)
+        return 2;
+
+    return 0;
 }
 
-void deleteQuestion(){
-    Question question;
-    ifstream arch("admin\questions\bench.cpp/.h", ios::binary);
-    ofstream archTemp("BancoDePreguntasTemp.dat", ios::binary);
-    int idSearch;
-    bool Encontro = false;
+int deleteQuestion(PublicUser admin, int ID){
 
-    system("cls");
-    cout << "*********BORRAR PREGUNTA********** \n \n";
-    if(arch)
+    Question question = getQuestion(admin, ID);
+
+    if (strcmp(question.statement, "\0") == 0) { // No existe
+        return 2;
+    }
+
+    char filename[150];
+    char tempFilename[150];
+
+    PublicUser temp;
+
+    strcpy(temp.username, "temp");
+
+    prepareAdminFileName(temp, tempFilename);
+    prepareAdminFileName(admin, filename);
+
+    checkIfFileExists(filename);
+
+    ifstream arch(filename, ios::binary);
+    ofstream archTemp(tempFilename, ios::binary);
+    bool found = false;
+
+    if(!arch || !archTemp)
+        return 1;
+    
+    while(!arch.eof())
     {
-        cout << "Digite el ID de la pregunta que desea editar: "; cin >> idSearch;
-        while(!arch.eof())
+        if(arch.read((char *)&question, sizeof(question)))
         {
-            if(arch.read((char *)&question, sizeof(question)))
+            if(ID != question.ID)
             {
-                if(idSearch != question.ID)
-                {
-                    archTemp.write((char *)&question, sizeof(question));
-                }
-                else
-                {
-                    Encontro = true;
-                }
+                archTemp.write((char *)&question, sizeof(question));
+            }
+            else
+            {
+                found = true;
             }
         }
-        arch.close();
-        archTemp.close();
-        remove("admin\questions\bench.cpp/.h");
-        rename("BancoDePreguntasTemp.dat", "admin\questions\bench.cpp/.h");
-        if(!Encontro)
-        {
-            cout << "No existe ninguna pregunta con ese ID \n";
-        } 
-        arch.close();
     }
-    else{
-        cout << "No se pudo abrir el archivo! \n";
-    }
-    system("pause");
+    arch.close();
+    archTemp.close();
+    remove(filename);
+    rename(tempFilename, filename);
+    if(!found)
+        return 2;
+
+    return 0;
 }

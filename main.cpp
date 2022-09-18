@@ -1,8 +1,17 @@
 #include <iostream>
 #include "auth\\auth.h"
-#include "lib\Question\question.h"
+#include "admin\\admin.h"
+#include "admin\\questions\\bench.h"
 
 using namespace std;
+
+/*
+ * Nombre: showQuestionsMenu
+ * Objetivo: Mostrar el menu de preguntas
+ * Entradas: El usuario que esta realizando la accion
+ * Salidas: Ninguna
+ * */
+void showQuestionsMenu(PublicUser actualUser);
 
 int main() {
 
@@ -11,10 +20,6 @@ int main() {
     int option;
 
     PublicUser actualUser;
-    // pirobos :)
-    // Sapo hpta no me hable asi
-    
-// Marca de adrian
 
 	bool isLogged = false;
 
@@ -57,6 +62,7 @@ int main() {
                 int optionMenu;
 
                 do {
+                    system("cls");
                     cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
 
                     cout << "�Bienvenido administrador!\n";
@@ -83,49 +89,13 @@ int main() {
                     switch (optionMenu)
                     {
                         case 1:
-                            break; 
-
+                            break;
                         case 2:
                             break;
                         case 3:
                             break;
                         case 4: 
-                            int optionBanc;
-                            do{
-                                system("cls");
-                                cout << "Modificar Banco de preguntas\n";
-
-                                cout << "1. Crear pregunta.\n";
-                                cout << "2. Modificar pregunta.\n";
-                                cout << "3. Consultar pregunta.\n";
-                                cout << "4. Borrar pregunta.\n\n";
-                                cout << "5. Salir.\n\n";
-                                cout << "Seleccione una opci�n: ";
-                                cin >> optionBanc;
-
-                                if (optionBanc > 5 || optionBanc < 1) { //Validaciones
-                                    cout << "Ingrese una opci�n valida.\n";
-                                    system("pause");
-                                    system("cls");
-                                    continue;
-                                }
-
-                                switch(optionBanc)
-                                {
-                                    case 1: 
-                                        createQuestion();
-                                        break;
-                                    case 2: 
-                                        updateQuestion();
-                                        break;
-                                    case 3:
-                                        getQuestion();
-                                        break;      
-                                    case 4:
-                                        deleteQuestion();
-                                        break;
-                                }
-                            }while(optionBanc !=5); 
+                            showQuestionsMenu(actualUser);
                             break;
                     }
 
@@ -175,4 +145,47 @@ int main() {
     }
 
     return 0;
+}
+
+void showQuestionsMenu(PublicUser actualUser) {
+    int optionBanc;
+    do {
+        system("cls");
+        cout << "Modificar Banco de preguntas\n";
+
+        cout << "1. Crear pregunta.\n";
+        cout << "2. Modificar pregunta.\n";
+        cout << "3. Consultar pregunta.\n";
+        cout << "4. Borrar pregunta.\n";
+        cout << "5. Mostrar todas las preguntas.\n\n";
+        cout << "6. Salir.\n\n";
+        cout << "Seleccione una opci�n: ";
+        cin >> optionBanc;
+
+        if (optionBanc > 6 || optionBanc < 1) { //Validaciones
+            cout << "Ingrese una opci�n valida.\n";
+            system("pause");
+            system("cls");
+            continue;
+        }
+
+        switch(optionBanc)
+        {
+            case 1:
+                createBenchQuestion(actualUser);
+                break;
+            case 2:
+                updateBenchQuestion(actualUser);
+                break;
+            case 3:
+                getBenchQuestion(actualUser);
+                break;
+            case 4:
+                deleteBenchQuestion(actualUser);
+                break;
+            case 5:
+                showBenchQuestions(actualUser);
+                break;
+        }
+    } while(optionBanc !=6);
 }

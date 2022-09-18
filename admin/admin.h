@@ -2,12 +2,13 @@
 #define ADMIN_H
 
 #include "..\\lib\\User\\user.h"
+#include "..\\auth\\auth.h"
 #include <iostream>
 
-void createExam(User actualUser);
+void createExam(PublicUser actualUser);
 
-void updateExam(User actualUser);
+void updateExam(PublicUser actualUser);
 
-void deleteExam(User actualUser);
+void deleteExam(PublicUser actualUser);
 
 #endif

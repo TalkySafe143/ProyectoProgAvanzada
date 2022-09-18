@@ -1,5 +1,7 @@
 #include "exam.h"
 
+using namespace std;
+
 int createExam(Exam newExam){
     ifstream file("..\\files\\exams.dat", ios::binary);
 
@@ -45,7 +47,7 @@ int createExam(Exam newExam){
     writeExam.date = newExam.date;
     strcpy(writeExam.owner, newExam.owner);
     writeExam.numberQuestions = newExam.numberQuestions;
-    RegExam.Student = newExam.Student;
+    writeExam.Student = newExam.Student;
 
     examFile.write((char*)&writeExam, sizeof(writeExam));
 
@@ -79,7 +81,7 @@ int updateExam(char* id, Exam updateExam){
                 writeExam.date = updateExam.date;
                 strcpy(writeExam.owner, updateExam.owner);
                 writeExam.numberQuestions = updateExam.numberQuestions;
-                RegExam.Student = updateExam.Student;
+                writeExam.Student = updateExam.Student;
 
                 file.write((char *) &writeExam, sizeof(writeExam));
 
