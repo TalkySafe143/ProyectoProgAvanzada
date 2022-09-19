@@ -189,3 +189,8 @@ void showQuestionsMenu(PublicUser actualUser) {
         }
     } while(optionBanc !=6);
 }
+
+/*
+Malparido adrian
+Pongale la documentacion a esa cagada
+*/
