@@ -15,4 +15,7 @@ int resizeExamArray(struct Exam *&arr, int length);
 
 void prepareAdminFileName(struct PublicUser admin, char* fileName);
 
+int resizeIdArray(char *&Id, int lenght);
+
+
 #endif

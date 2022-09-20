@@ -4,6 +4,16 @@
 #include "..\\..\\lib\\Question\\question.h"
 #include "..\\..\\auth\\auth.h"
 
+
+
+/*
+ * Nombre: showQuestionsMenu
+ * Objetivo: Mostrar el menu de preguntas
+ * Entradas: El usuario que esta realizando la accion
+ * Salidas: Ninguna
+ * */
+void showQuestionsMenu(PublicUser actualUser);
+
 /*
  * Nombre: getBenchQuestion
  * Objetivo: Mostrar una sola pregunta de la banca de preguntas (Llamando a question.h)

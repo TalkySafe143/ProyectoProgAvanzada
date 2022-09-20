@@ -2,6 +2,49 @@
 
 using namespace std;
 
+void showQuestionsMenu(PublicUser actualUser) {
+    int optionBanc;
+    do {
+        system("cls");
+        cout << "Modificar Banco de preguntas\n";
+
+        cout << "1. Crear pregunta.\n";
+        cout << "2. Modificar pregunta.\n";
+        cout << "3. Consultar pregunta.\n";
+        cout << "4. Borrar pregunta.\n";
+        cout << "5. Mostrar todas las preguntas.\n\n";
+        cout << "6. Salir.\n\n";
+        cout << "Seleccione una opci�n: ";
+        cin >> optionBanc;
+
+        if (optionBanc > 6 || optionBanc < 1) { //Validaciones
+            cout << "Ingrese una opci�n valida.\n";
+            system("pause");
+            system("cls");
+            continue;
+        }
+
+        switch(optionBanc)
+        {
+            case 1:
+                createBenchQuestion(actualUser);
+                break;
+            case 2:
+                updateBenchQuestion(actualUser);
+                break;
+            case 3:
+                getBenchQuestion(actualUser);
+                break;
+            case 4:
+                deleteBenchQuestion(actualUser);
+                break;
+            case 5:
+                showBenchQuestions(actualUser);
+                break;
+        }
+    } while(optionBanc !=6);
+}
+
 void createBenchQuestion(PublicUser admin){
     Question create;
 
@@ -44,7 +87,7 @@ void updateBenchQuestion(PublicUser admin){
 
     while (idSearch != -1) {
         system("cls");
-        cout << "*********EDITAR PREGUNTA********** \n \n";
+        cout << "*************** EDITAR PREGUNTA *************** \n \n";
 
         cout << "Digite el ID de la pregunta que desea editar: ";
 
@@ -154,6 +197,7 @@ void updateBenchQuestion(PublicUser admin){
 void deleteBenchQuestion(PublicUser admin){
     int idSearch;
 
+    system("cls");
     cout << "*********ELIMINAR PREGUNTA********** \n \n";
 
     cout << "Digite el ID de la pregunta que desea eliminar: ";
@@ -218,6 +262,7 @@ void showBenchQuestions(PublicUser admin){
 void getBenchQuestion(PublicUser admin) {
     int idSearch;
 
+    system("cls");
     cout << "*********BUSCAR PREGUNTA********** \n \n";
 
     cout << "Digite el ID de la pregunta que desea buscar: ";

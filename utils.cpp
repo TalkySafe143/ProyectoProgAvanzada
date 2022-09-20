@@ -48,3 +48,18 @@ void prepareAdminFileName(PublicUser admin, char* fileName) {
     strcat(fileName, admin.username);
     strcat(fileName, "Bench.dat");
 }
+
+int resizeIdArray(char *&Id, int lenght)
+{
+    char *temp = new char[lenght + 4];
+
+    for (int i = 0; i < lenght; i++){
+        *(temp + i) = *(Id + i);
+    }
+
+    delete [] Id;
+
+    Id = temp;
+
+    return lenght + 4;
+}
