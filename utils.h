@@ -15,4 +15,6 @@ int resizeExamArray(struct Exam *&arr, int length);
 
 void prepareAdminFileName(struct PublicUser admin, char* fileName);
 
+void generateUniqueID(char* ID);
+
 #endif

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include "auth\\auth.h"
 #include "admin\\admin.h"
 #include "admin\\questions\\bench.h"
@@ -13,7 +14,17 @@ using namespace std;
  * */
 void showQuestionsMenu(PublicUser actualUser);
 
+/*
+ * Nombre: showExamsMenu
+ * Objetivo: Mostrar el menu de los examenes
+ * Entradas: El usuario que esta realizando la accion
+ * Salidas: Ninguna
+ * */
+void showExamsMenu(PublicUser actualUser);
+
 int main() {
+
+    srand(time(NULL)); // Generar una semilla aleatoria para generateUniqueID() en utils.cpp
 
     setlocale(LC_ALL, ""); // Poner las comas y acentos
 
@@ -67,15 +78,14 @@ int main() {
 
                     cout << "�Bienvenido administrador!\n";
 
-                    cout << "1. Crear examen.\n";
-                    cout << "2. Eliminar examen.\n";
-                    cout << "3. Editar examen.\n";
-                    cout << "4. Modificar banco de preguntas.\n\n";
-                    cout << "5. Salir.\n\n";
+                    cout << "1. Administrar examenes.\n";
+                    cout << "2. Administrar banco de preguntas.\n\n";
+                    cout << "3. Administrar reportes.\n";
+                    cout << "4. Salir.\n\n";
                     cout << "Seleccione una opci�n: ";
                     cin >> optionMenu;
 
-                    if (optionMenu > 5 || optionMenu < 1) {
+                    if (optionMenu > 4 || optionMenu < 1) {
                         cout << "Ingrese una opci�n valida.\n";
                         system("pause");
                         system("cls");
@@ -89,13 +99,12 @@ int main() {
                     switch (optionMenu)
                     {
                         case 1:
+                            showExamsMenu(actualUser);
                             break;
                         case 2:
+                            showQuestionsMenu(actualUser);
                             break;
                         case 3:
-                            break;
-                        case 4: 
-                            showQuestionsMenu(actualUser);
                             break;
                     }
 
