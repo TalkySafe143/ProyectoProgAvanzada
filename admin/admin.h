@@ -28,14 +28,6 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged);
 void createExam(PublicUser actualUser);
 
 /*
- * Nombre: updateExam
- * Objetivo: Pedir los datos a actualizar del examen
- * Entradas: El usuario que esta realizando la accion
- * Salidas: Ninguna
- * */
-void updateExam(PublicUser actualUser);
-
-/*
  * Nombre: deleteExam
  * Objetivo: Pedir el ID para eliminar el examen
  * Entradas: El usuario que esta realizando la accion

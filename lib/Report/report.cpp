@@ -7,7 +7,7 @@ using namespace std;
 void getReport(char IdExam[3]){
     
     infoReport report;
-    ifstream examPresent("ExamenesPresentados.dat", ios::binary);
+    ifstream examPresent("lib\\files\\ExamenesPresentados.dat", ios::binary);
      //Funcion para mostrar todos los examenes
     if(!examPresent)
     {
@@ -30,7 +30,7 @@ void getReport(char IdExam[3]){
 
 void createReport(infoReport report){
 
-    ofstream examPresent("ExamenesPresentados.dat", ios::binary|ios::app);
+    ofstream examPresent("lib\\files\\ExamenesPresentados.dat", ios::binary|ios::app);
 
     if(!examPresent)
     {

@@ -3,10 +3,4 @@
 
 using namespace std;
 
-void presentExam(){
-    //Funcion listar examenes
-
-    
-
-
-}
+void presentExam(){};

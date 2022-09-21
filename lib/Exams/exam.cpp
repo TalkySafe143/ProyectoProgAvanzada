@@ -3,7 +3,14 @@
 using namespace std;
 
 int createExam(Exam newExam){
-    ifstream file("..\\files\\exams.dat", ios::binary);
+
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream file(filename, ios::binary);
 
     /*
      * exams.dat
@@ -35,7 +42,7 @@ int createExam(Exam newExam){
 
     file.close();
 
-    ofstream examFile("..\\files\\exams.dat", ios::binary | ios::app);
+    ofstream examFile("lib\\files\\exams.dat", ios::binary | ios::app);
 
     if (!examFile)
         return 1;
@@ -105,7 +112,14 @@ int updateExam(char* id, Exam updateExam){
 }
 
 int deleteExam(char* id){
-    ifstream readFile("..\\files\\exams.dat", ios::binary);
+
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream readFile(filename, ios::binary);
     ofstream writeFile("..\\files\\temp.dat", ios::binary);
 
     if(!readFile || !writeFile)

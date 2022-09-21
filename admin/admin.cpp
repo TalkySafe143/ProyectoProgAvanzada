@@ -3,7 +3,14 @@
 using namespace std;
 
 void showExams(PublicUser actualUser){
-    ifstream file("\\lib\\files\\exams.dat", ios::binary);
+
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream file(filename, ios::binary);
 
     if (!file) {
         cout << "Existe un error en los archivos\n";
@@ -13,6 +20,7 @@ void showExams(PublicUser actualUser){
             Question readQuestion;
             if (file.read((char*)&readExam, sizeof(readExam))) {
                 if (strcmp(readExam.owner, actualUser.username) == 0) {
+                    system("cls");
                     cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << readExam.name << " >>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
                     cout << "ID: " << readExam.ID << endl;
                     cout << "Fecha de creacion del examen: " << ctime(&readExam.date) << endl;
@@ -30,6 +38,7 @@ void showExams(PublicUser actualUser){
                     }
 
                     cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< Fin del examen >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+                    system("pause");
                 } else {
                     for (int i = 0; i < readExam.numberQuestions; i++) {
                         file.read((char*)&readQuestion, sizeof(readQuestion));
@@ -40,6 +49,8 @@ void showExams(PublicUser actualUser){
     }
 
     file.close();
+
+    system("pause");
 };
 
 void createExam(PublicUser actualUser) {
@@ -47,7 +58,33 @@ void createExam(PublicUser actualUser) {
 
     Exam newExam;
 
-    generateUniqueID(newExam.ID);
+    bool alreadyID = false;
+
+    do {
+        generateUniqueID(newExam.ID);
+
+        cout << newExam.ID << endl;
+
+        ifstream readFile("lib\\files\\exams.dat", ios::binary);
+
+        if (readFile) {
+            RegExam checkID;
+            Question checkQ;
+            while (!readFile.eof()) {
+                if (readFile.read((char*)&checkID, sizeof(checkID))) {
+                    if (strcmp(newExam.ID, checkID.ID) == 0) {
+                        alreadyID = true;
+                        break;
+                    }
+                    for (int i = 0; i < checkID.numberQuestions; i++) {
+                        readFile.read((char*)&checkQ, sizeof(checkQ));
+                    }
+                }
+            }
+        }
+
+        readFile.close();
+    } while (alreadyID);
 
     cout << "Ingrese el nombre del examen: ";
     cin.ignore();
@@ -67,7 +104,7 @@ void createExam(PublicUser actualUser) {
 
     newExam.numberQuestions = 0;
 
-    newExam.questions = new Question[numberQuestions];
+    newExam.questions = new Question[newExam.numberQuestions];
 
     char filename[150];
 
@@ -91,68 +128,77 @@ void createExam(PublicUser actualUser) {
         }
         file.close();
 
-        for (int i = 0; i < limit; i++) {
+        if (limit > totalQuestions) {
+            cout << "No existe ese numero de preguntas en el banco de preguntas\n";
+            system("pause");
+        } else {
+            for (int i = 0; i < limit; i++) { // 3
 
-            int random = rand() % totalQuestions;
-
-            ifstream file(filename, ios::binary);
-
-            if (!file) {
-                cout << "Ups, algo paso con los archivos de bench\n";
-            } else {
-                int whileCount = 0;
                 bool exist;
-                while (!file.eof()) {
-                    if(file.read((char*)&readQuestion, sizeof(readQuestion))) {
-                        if (whileCount == random) {
-                            do {
-                                exist = false;
-                                for (int j = 0; j < limit; j++) {
-                                    if (alreadyAdded[j] == random) {
-                                        exist = true;
-                                        break;
-                                    }
-                                }
+                int random;
 
-                                if (!exist) {
-                                    newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
-                                    *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
-                                    alreadyAdded[i] = random;
-                                }
-                            } while (exist);
+                do {
+                    exist = false;
+                    random = 1 + (rand() % totalQuestions); //1
+
+                    for (int j = 0; j < limit; j++) {
+                        if (alreadyAdded[j] == random) {
+                            exist = true;
                             break;
                         }
-                        whileCount++;
+                    }
+                } while (exist);
+
+                cout << random << endl;
+
+                ifstream file(filename, ios::binary);
+
+                if (!file) {
+                    cout << "Ups, algo paso con los archivos de bench\n";
+                } else {
+                    int whileCount = 1;
+                    while (!file.eof()) {
+                        if(file.read((char*)&readQuestion, sizeof(readQuestion))) {
+                            if (whileCount == random) {
+
+                                        newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
+                                        *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
+                                        alreadyAdded[i] = random;
+                                break;
+                            }
+                            whileCount++;
+                        }
                     }
                 }
+
+                file.close();
             }
-
-            file.close();
-        }   
+        }
     }
 
-    int confirm = createExam(newExam);
+    if (limit <= totalQuestions) {
+        int confirm = createExam(newExam);
 
-    switch (confirm) {
-        case 1:
-            cout << "Algo sucedio en los archivos al momento de crear!\n";
-            system("pause");
-            system("cls");
-            break;
-        case 2:
-            cout << "Algo sucedio en la logica, revisa bien!\n";
-            system("pause");
-            system("cls");
-            break;
-        case 0:
-            cout << "Examen creado correctamente\n";
-            system("pause");
-            system("cls");
-            break;
+        switch (confirm) {
+            case 1:
+                cout << "Algo sucedio en los archivos al momento de crear!\n";
+                system("pause");
+                system("cls");
+                break;
+            case 2:
+                cout << "Algo sucedio en la logica, revisa bien!\n";
+                system("pause");
+                system("cls");
+                break;
+            case 0:
+                cout << "Examen creado correctamente\n";
+                system("pause");
+                system("cls");
+                break;
+        }
+
+        delete [] newExam.questions;
     }
-
-    delete [] newExam.questions;
-
 };
 
 void showAdminMenu(PublicUser actualUser, bool &isLogged)
@@ -167,7 +213,7 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
 
         cout << "1. Crear examen.\n";
         cout << "2. Eliminar examen.\n";
-        cout << "3. Editar examen.\n";
+        cout << "3. Mostrar examenes creados.\n";
         cout << "4. Modificar banco de preguntas.\n\n";
         cout << "5. Salir.\n\n";
         cout << "Seleccione una opci�n: ";
@@ -187,10 +233,13 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
         switch (optionMenu)
         {
             case 1:
+                createExam(actualUser);
                 break;
             case 2:
+                deleteExam(actualUser);
                 break;
             case 3:
+                showExams(actualUser);
                 break;
             case 4:
                 showQuestionsMenu(actualUser);
@@ -204,7 +253,5 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
 
     } while (optionMenu != 5);
 }
-
-void updateExam(PublicUser actualUser){};
 
 void deleteExam(PublicUser actualUser){};

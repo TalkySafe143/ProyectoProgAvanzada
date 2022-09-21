@@ -52,7 +52,7 @@ void listExam(PublicUser actualUser){
     
 
     ifstream exams("\\lib\\files\\exams.dat", ios::binary);
-    ifstream presents("ExamenesPresentados.dat", ios::binary);
+    ifstream presents("lib\\files\\ExamenesPresentados.dat", ios::binary);
     
     if(!presents)
     {
