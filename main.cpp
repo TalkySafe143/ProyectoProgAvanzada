@@ -3,15 +3,11 @@
 #include "auth\\auth.h"
 #include "admin\\admin.h"
 #include "admin\\questions\\bench.h"
+#include "student\\student.h"
 
 using namespace std;
 
-/*
- * Nombre: showQuestionsMenu
- * Objetivo: Mostrar el menu de preguntas
- * Entradas: El usuario que esta realizando la accion
- * Salidas: Ninguna
- * */
+
 void showQuestionsMenu(PublicUser actualUser);
 
 /*
@@ -69,137 +65,13 @@ int main() {
         
         if (isLogged) {
             if (actualUser.isAdmin) {
-
-                int optionMenu;
-
-                do {
-                    system("cls");
-                    cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
-
-                    cout << "�Bienvenido administrador!\n";
-
-                    cout << "1. Administrar examenes.\n";
-                    cout << "2. Administrar banco de preguntas.\n\n";
-                    cout << "3. Administrar reportes.\n";
-                    cout << "4. Salir.\n\n";
-                    cout << "Seleccione una opci�n: ";
-                    cin >> optionMenu;
-
-                    if (optionMenu > 4 || optionMenu < 1) {
-                        cout << "Ingrese una opci�n valida.\n";
-                        system("pause");
-                        system("cls");
-                        continue;
-                    }
-
-                    if (optionMenu == 5) {
-                        isLogged = false;
-                    }
-
-                    switch (optionMenu)
-                    {
-                        case 1:
-                            showExamsMenu(actualUser);
-                            break;
-                        case 2:
-                            showQuestionsMenu(actualUser);
-                            break;
-                        case 3:
-                            break;
-                    }
-
-                    /*
-                     * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
-                     * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
-                     * */
-
-                } while (optionMenu != 5);
+                showAdminMenu(actualUser, isLogged);
 
             } else {
-
-                int optionMenu;
-
-                do {
-
-                    cout << "==================== Hola de nuevo, " << actualUser.username << " (Estudiante) ====================\n";
-
-                    cout<<"\nBienvenido estudiante \n "<<endl;
-
-                    cout<<"1. Presentar examen"<<endl;
-                    cout<<"2. Ver resultados del examen"<<endl;
-                    cout<<"3. Revisar ex�menes presentados"<<endl;
-                    cout<<"4. Salir\n"<<endl;
-                    cout<<"Seleccione una opci�n: ";
-
-                    cin>> optionMenu;
-
-                    if (optionMenu > 4 || optionMenu < 1) {
-                        cout << "Ingrese una opci�n valida.\n";
-                        system("pause");
-                        system("cls");
-                        continue;
-                    }
-
-                    if (optionMenu == 4) {
-                        isLogged = false;
-                    }
-
-                    /*
-                     * TODO: Implementar el folder de student/
-                     * */
-
-                } while(optionMenu!=4);
+                showStudentMenu(actualUser, isLogged);
             }
         }
     }
 
     return 0;
 }
-
-void showQuestionsMenu(PublicUser actualUser) {
-    int optionBanc;
-    do {
-        system("cls");
-        cout << "Modificar Banco de preguntas\n";
-
-        cout << "1. Crear pregunta.\n";
-        cout << "2. Modificar pregunta.\n";
-        cout << "3. Consultar pregunta.\n";
-        cout << "4. Borrar pregunta.\n";
-        cout << "5. Mostrar todas las preguntas.\n\n";
-        cout << "6. Salir.\n\n";
-        cout << "Seleccione una opci�n: ";
-        cin >> optionBanc;
-
-        if (optionBanc > 6 || optionBanc < 1) { //Validaciones
-            cout << "Ingrese una opci�n valida.\n";
-            system("pause");
-            system("cls");
-            continue;
-        }
-
-        switch(optionBanc)
-        {
-            case 1:
-                createBenchQuestion(actualUser);
-                break;
-            case 2:
-                updateBenchQuestion(actualUser);
-                break;
-            case 3:
-                getBenchQuestion(actualUser);
-                break;
-            case 4:
-                deleteBenchQuestion(actualUser);
-                break;
-            case 5:
-                showBenchQuestions(actualUser);
-                break;
-        }
-    } while(optionBanc !=6);
-}
-
-/*
-Malparido adrian
-Pongale la documentacion a esa cagada
-*/

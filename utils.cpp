@@ -50,15 +50,30 @@ void prepareAdminFileName(PublicUser admin, char* fileName) {
 }
 
 void generateUniqueID(char* ID) {
-    const int ch_MAX = 34;
+    const int ch_MAX = 35;
 
     char keys[ch_MAX] = {'a', 'b', 'c', 'd', 'e', 'f', 'g',
-                          'h', 'i', 'j', 'k', 'l', 'm', 'n',
-                          'o', 'p', 'q', 'r', 's', 't', 'u',
-                          'v', 'w', 'x', 'y', 'z', '1', '2',
-                          '3', '4', '5', '6', '7', '8', '9'};
-    
+                         'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                         'o', 'p', 'q', 'r', 's', 't', 'u',
+                         'v', 'w', 'x', 'y', 'z', '1', '2',
+                         '3', '4', '5', '6', '7', '8', '9'};
+
     for (int i = 0; i < 3; i++) {
         ID[i] = keys[rand() % ch_MAX];
     }
+}
+
+int resizeIdArray(char *&Id, int lenght)
+{
+    char *temp = new char[lenght + 4];
+
+    for (int i = 0; i < lenght; i++){
+        *(temp + i) = *(Id + i);
+    }
+
+    delete [] Id;
+
+    Id = temp;
+
+    return lenght + 4;
 }
