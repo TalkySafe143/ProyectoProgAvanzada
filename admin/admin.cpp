@@ -212,21 +212,20 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
         cout << "�Bienvenido administrador!\n";
 
         cout << "1. Crear examen.\n";
-        cout << "2. Eliminar examen.\n";
-        cout << "3. Mostrar examenes creados.\n";
-        cout << "4. Modificar banco de preguntas.\n\n";
-        cout << "5. Salir.\n\n";
+        cout << "2. Mostrar examenes creados.\n";
+        cout << "3. Modificar banco de preguntas.\n\n";
+        cout << "4. Salir.\n\n";
         cout << "Seleccione una opci�n: ";
         cin >> optionMenu;
 
-        if (optionMenu > 5 || optionMenu < 1) {
+        if (optionMenu > 4 || optionMenu < 1) {
             cout << "Ingrese una opci�n valida.\n";
             system("pause");
             system("cls");
             continue;
         }
 
-        if (optionMenu == 5) {
+        if (optionMenu == 4) {
             isLogged = false;
         }
 
@@ -236,12 +235,9 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
                 createExam(actualUser);
                 break;
             case 2:
-                deleteExam(actualUser);
-                break;
-            case 3:
                 showExams(actualUser);
                 break;
-            case 4:
+            case 3:
                 showQuestionsMenu(actualUser);
                 break;
         }
@@ -251,7 +247,5 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
          * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
          * */
 
-    } while (optionMenu != 5);
+    } while (optionMenu != 4);
 }
-
-void deleteExam(PublicUser actualUser){};

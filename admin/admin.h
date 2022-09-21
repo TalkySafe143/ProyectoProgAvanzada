@@ -27,12 +27,5 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged);
  * */
 void createExam(PublicUser actualUser);
 
-/*
- * Nombre: deleteExam
- * Objetivo: Pedir el ID para eliminar el examen
- * Entradas: El usuario que esta realizando la accion
- * Salidas: Ninguna
- * */
-void deleteExam(PublicUser actualUser);
 
 #endif

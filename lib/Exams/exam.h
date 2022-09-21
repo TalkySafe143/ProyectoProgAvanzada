@@ -55,4 +55,6 @@ int updateExam(char* id, Exam updateExam);
  * */
 int deleteExam(char* id);
 
+Question *searchExam(char ID[3]);
+
 #endif //EXAM_H

@@ -1,6 +1,9 @@
 #ifndef PRESENT_H
 #define PRESENT_H
 
-void presentExam();
+#include "..\\student\\student.h"
+#include "..\\lib\\Exams\\exam.h"
+
+void presentExam(PublicUser actualUser);
 
 #endif

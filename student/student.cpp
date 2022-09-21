@@ -36,8 +36,6 @@ void showStudentMenu(PublicUser actualUser, bool &isLogged){
     }
 
     }while(option != 2);
-    
-    
 }
 
 void listExam(PublicUser actualUser){

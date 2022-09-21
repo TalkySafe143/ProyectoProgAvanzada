@@ -159,3 +159,55 @@ int deleteExam(char* id){
         return 0;
     }
 }
+
+Question *searchExam(char ID[3]){
+
+    Exam regExam;
+    Question regQuestion;
+    
+    bool Encontro = false;
+
+    ifstream exams("..\\files\\exams.dat", ios::binary);
+
+    if(!exams)
+    {
+        cout << "No se pudo abrir el archivo! \n \n";
+    }
+    else{
+        while(!exams.eof())
+        {
+            if(exams.read((char *)&regExam, sizeof(regExam)))
+            {
+                if(strcmp(ID, regExam.ID))
+                {
+                    Question *questions = new Question [regExam.numberQuestions];
+                    for (int i=0; i < regExam.numberQuestions; i++)
+                    {
+                        if(exams.read((char *)&regQuestion, sizeof(regQuestion)))
+                        {
+                            (questions+i)->ID = regQuestion.ID;
+                            strcpy((questions+i)->statement, regQuestion.statement);
+                            strcpy((questions+i)->OptionA, regQuestion.OptionA);
+                            strcpy((questions+i)->OptionB, regQuestion.OptionB);
+                            strcpy((questions+i)->OptionC, regQuestion.OptionC);
+                            strcpy((questions+i)->OptionD, regQuestion.OptionD);
+                            (questions+i)->correctOption = regQuestion.correctOption;
+                        }
+                        Encontro = true;
+                    }
+                    return questions;
+                }
+
+                if(!Encontro)
+                {
+                    for(int i=0; i < regExam.numberQuestions; i++)
+                    {
+                        exams.read((char *)&regQuestion, sizeof(regQuestion));
+                    }
+                } 
+            }
+        }
+        exams.close();
+    }
+}
+

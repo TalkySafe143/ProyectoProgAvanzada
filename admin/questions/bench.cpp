@@ -65,7 +65,7 @@ void createBenchQuestion(PublicUser admin){
     cout << "Ingrese la opcion D: ";
     cin.getline(create.OptionD, sizeof(create.OptionD));
     cout << "Ingrese la respuesta correcta: ";
-    cin.getline(create.correctOption, sizeof(create.correctOption));
+    cin >> create.correctOption;
 
     int result = createQuestion(admin, create);
 
@@ -81,7 +81,7 @@ void createBenchQuestion(PublicUser admin){
     system("cls");
 };
 
-void updateBenchQuestion(PublicUser admin){ //REVISAR FUNCION
+void updateBenchQuestion(PublicUser admin){ 
 
     int idSearch = -2, opcion = -2;
 
@@ -162,7 +162,7 @@ void updateBenchQuestion(PublicUser admin){ //REVISAR FUNCION
                 case 7:
                     cout << "Ingrese la nueva opcion correcta: ";
                     cin.ignore();
-                    cin.getline(question.correctOption, sizeof(question.correctOption));
+                    cin >> question.correctOption;
                     break;
                 default:
                     cout << "Opcion invalida \n";
