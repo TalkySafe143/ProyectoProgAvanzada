@@ -47,6 +47,8 @@ void prepareAdminFileName(PublicUser admin, char* fileName) {
     strcpy(fileName, "lib\\files\\");
     strcat(fileName, admin.username);
     strcat(fileName, "Bench.dat");
+
+    // La direccion del archivo quedaria lib\\files\\<NombreUsuario>Bench.dat
 }
 
 void generateUniqueID(char* ID) {
