@@ -3,7 +3,14 @@
 using namespace std;
 
 int createExam(Exam newExam){
-    ifstream file("..\\files\\exams.dat", ios::binary);
+
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream file(filename, ios::binary);
 
     /*
      * exams.dat
@@ -35,7 +42,7 @@ int createExam(Exam newExam){
 
     file.close();
 
-    ofstream examFile("..\\files\\exams.dat", ios::binary | ios::app);
+    ofstream examFile("lib\\files\\exams.dat", ios::binary | ios::app);
 
     if (!examFile)
         return 1;
@@ -47,7 +54,6 @@ int createExam(Exam newExam){
     writeExam.date = newExam.date;
     strcpy(writeExam.owner, newExam.owner);
     writeExam.numberQuestions = newExam.numberQuestions;
-    writeExam.Student = newExam.Student;
 
     examFile.write((char*)&writeExam, sizeof(writeExam));
 
@@ -81,7 +87,6 @@ int updateExam(char* id, Exam updateExam){
                 writeExam.date = updateExam.date;
                 strcpy(writeExam.owner, updateExam.owner);
                 writeExam.numberQuestions = updateExam.numberQuestions;
-                writeExam.Student = updateExam.Student;
 
                 file.write((char *) &writeExam, sizeof(writeExam));
 
@@ -107,7 +112,14 @@ int updateExam(char* id, Exam updateExam){
 }
 
 int deleteExam(char* id){
-    ifstream readFile("..\\files\\exams.dat", ios::binary);
+
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream readFile(filename, ios::binary);
     ofstream writeFile("..\\files\\temp.dat", ios::binary);
 
     if(!readFile || !writeFile)

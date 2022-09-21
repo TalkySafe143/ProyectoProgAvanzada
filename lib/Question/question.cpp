@@ -16,7 +16,7 @@ Question getQuestion(PublicUser admin, int ID){
     ifstream arch(filename, ios::binary);
 
     if (!arch) {
-        strcpy(errorQuestion.statement, "fileError");
+        strcpy(errorQuestion.statement, "fileError"); 
         return errorQuestion;
     }
 
@@ -33,15 +33,16 @@ Question getQuestion(PublicUser admin, int ID){
 
     arch.close();
 
-    return errorQuestion;
+    return errorQuestion; //2 tipos de errores: - "\0" si no encontro la pregunta 
+                          //                    - "fileError" si no pudo abrir el archivo
 }
 
 
 int createQuestion(PublicUser admin, Question newQuestion){
     Question question = getQuestion(admin, newQuestion.ID);
 
-    if (strcmp(question.statement, "\0") != 0) { // Ya existe
-        return 2;
+    if (strcmp(question.statement, "\0") != 0) { 
+        return 2; //La pregunta ya existe
     }
 
     char filename[150];
@@ -51,14 +52,14 @@ int createQuestion(PublicUser admin, Question newQuestion){
     ofstream arch(filename, ios::binary|ios::app);
 
     if (!arch) {
-        return 1;
+        return 1; //No se pudo abrir el archivo
     }
 
     arch.write((char*)&newQuestion, sizeof(newQuestion));
 
     arch.close();
 
-    return 0;
+    return 0; //Se creo la pregunta correctamente
 }
 
 

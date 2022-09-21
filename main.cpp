@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include "auth\\auth.h"
 #include "admin\\admin.h"
 #include "admin\\questions\\bench.h"
@@ -6,10 +7,17 @@
 
 using namespace std;
 
-
-void showQuestionsMenu(PublicUser actualUser);
+/*
+ * Nombre: showExamsMenu
+ * Objetivo: Mostrar el menu de los examenes
+ * Entradas: El usuario que esta realizando la accion
+ * Salidas: Ninguna
+ * */
+void showExamsMenu(PublicUser actualUser);
 
 int main() {
+
+    srand(time(NULL)); // Generar una semilla aleatoria para generateUniqueID() en utils.cpp
 
     setlocale(LC_ALL, ""); // Poner las comas y acentos
 
@@ -53,9 +61,7 @@ int main() {
         	return 0;
         
         if (isLogged) {
-
             if (actualUser.isAdmin) {
-
                 showAdminMenu(actualUser, isLogged);
 
             } else {

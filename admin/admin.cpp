@@ -2,59 +2,256 @@
 
 using namespace std;
 
+void showExams(PublicUser actualUser){
+
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream file(filename, ios::binary);
+
+    if (!file) {
+        cout << "Existe un error en los archivos\n";
+    } else {
+        while (!file.eof()) {
+            RegExam readExam;
+            Question readQuestion;
+            if (file.read((char*)&readExam, sizeof(readExam))) {
+                if (strcmp(readExam.owner, actualUser.username) == 0) {
+                    system("cls");
+                    cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << readExam.name << " >>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+                    cout << "ID: " << readExam.ID << endl;
+                    cout << "Fecha de creacion del examen: " << ctime(&readExam.date) << endl;
+                    cout << "Preguntas: <<<<<<<<<<<<<<<<<" << endl;
+                    for (int i = 0; i < readExam.numberQuestions; i++) {
+                        file.read((char*)&readQuestion, sizeof(readQuestion));
+                        cout << readQuestion.statement << endl;
+                        cout << "A. " << readQuestion.OptionA << endl;
+                        cout << "B. " << readQuestion.OptionB << endl;
+                        cout << "C. " << readQuestion.OptionC << endl;
+                        cout << "D. " << readQuestion.OptionD << endl;
+                        cout << "ID de la pregunta: " << readQuestion.ID << endl;
+                        cout << "Respuesta correcta: " << readQuestion.correctOption << endl;
+                        cout << "------------------------------------------------------------\n";
+                    }
+
+                    cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< Fin del examen >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+                    system("pause");
+                } else {
+                    for (int i = 0; i < readExam.numberQuestions; i++) {
+                        file.read((char*)&readQuestion, sizeof(readQuestion));
+                    }
+                }
+            }
+        }
+    }
+
+    file.close();
+
+    system("pause");
+};
+
+void createExam(PublicUser actualUser) {
+    cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< CREAR EXAMEN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
+
+    Exam newExam;
+
+    bool alreadyID = false;
+
+    do {
+        generateUniqueID(newExam.ID);
+
+        cout << newExam.ID << endl;
+
+        ifstream readFile("lib\\files\\exams.dat", ios::binary);
+
+        if (readFile) {
+            RegExam checkID;
+            Question checkQ;
+            while (!readFile.eof()) {
+                if (readFile.read((char*)&checkID, sizeof(checkID))) {
+                    if (strcmp(newExam.ID, checkID.ID) == 0) {
+                        alreadyID = true;
+                        break;
+                    }
+                    for (int i = 0; i < checkID.numberQuestions; i++) {
+                        readFile.read((char*)&checkQ, sizeof(checkQ));
+                    }
+                }
+            }
+        }
+
+        readFile.close();
+    } while (alreadyID);
+
+    cout << "Ingrese el nombre del examen: ";
+    cin.ignore();
+    cin.getline(newExam.name, sizeof(newExam.name));
+
+    auto now = chrono::system_clock::now();
+
+    newExam.date = chrono::system_clock::to_time_t(now);
+
+    strcpy(newExam.owner, actualUser.username);
+
+    int limit;
+
+    cout << "¿Cuantas preguntas desea generar?: ";
+
+    cin >> limit;
+
+    newExam.numberQuestions = 0;
+
+    newExam.questions = new Question[newExam.numberQuestions];
+
+    char filename[150];
+
+    prepareAdminFileName(actualUser, filename);
+
+    ifstream file(filename, ios::binary);
+
+    int totalQuestions = 0;
+
+    int alreadyAdded[limit] = {};
+
+    Question readQuestion;
+
+    if (!file) {
+        cout << "Existio un problema con los archivos, se creo el examen sin preguntas.\n";
+    } else {
+        while (!file.eof()) {
+            if (file.read((char*)&readQuestion, sizeof(readQuestion))) {
+                totalQuestions++;
+            }
+        }
+        file.close();
+
+        if (limit > totalQuestions) {
+            cout << "No existe ese numero de preguntas en el banco de preguntas\n";
+            system("pause");
+        } else {
+            for (int i = 0; i < limit; i++) { // 3
+
+                bool exist;
+                int random;
+
+                do {
+                    exist = false;
+                    random = 1 + (rand() % totalQuestions); //1
+
+                    for (int j = 0; j < limit; j++) {
+                        if (alreadyAdded[j] == random) {
+                            exist = true;
+                            break;
+                        }
+                    }
+                } while (exist);
+
+                cout << random << endl;
+
+                ifstream file(filename, ios::binary);
+
+                if (!file) {
+                    cout << "Ups, algo paso con los archivos de bench\n";
+                } else {
+                    int whileCount = 1;
+                    while (!file.eof()) {
+                        if(file.read((char*)&readQuestion, sizeof(readQuestion))) {
+                            if (whileCount == random) {
+
+                                        newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
+                                        *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
+                                        alreadyAdded[i] = random;
+                                break;
+                            }
+                            whileCount++;
+                        }
+                    }
+                }
+
+                file.close();
+            }
+        }
+    }
+
+    if (limit <= totalQuestions) {
+        int confirm = createExam(newExam);
+
+        switch (confirm) {
+            case 1:
+                cout << "Algo sucedio en los archivos al momento de crear!\n";
+                system("pause");
+                system("cls");
+                break;
+            case 2:
+                cout << "Algo sucedio en la logica, revisa bien!\n";
+                system("pause");
+                system("cls");
+                break;
+            case 0:
+                cout << "Examen creado correctamente\n";
+                system("pause");
+                system("cls");
+                break;
+        }
+
+        delete [] newExam.questions;
+    }
+};
+
 void showAdminMenu(PublicUser actualUser, bool &isLogged)
 {
     int optionMenu;
 
-     do {
+    do {
+        system("cls");
+        cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
+
+        cout << "�Bienvenido administrador!\n";
+
+        cout << "1. Crear examen.\n";
+        cout << "2. Eliminar examen.\n";
+        cout << "3. Mostrar examenes creados.\n";
+        cout << "4. Modificar banco de preguntas.\n\n";
+        cout << "5. Salir.\n\n";
+        cout << "Seleccione una opci�n: ";
+        cin >> optionMenu;
+
+        if (optionMenu > 5 || optionMenu < 1) {
+            cout << "Ingrese una opci�n valida.\n";
+            system("pause");
             system("cls");
-            cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
+            continue;
+        }
 
-            cout << "�Bienvenido administrador!\n";
+        if (optionMenu == 5) {
+            isLogged = false;
+        }
 
-            cout << "1. Crear examen.\n";
-            cout << "2. Eliminar examen.\n";
-            cout << "3. Editar examen.\n";
-            cout << "4. Modificar banco de preguntas.\n\n";
-            cout << "5. Salir.\n\n";
-            cout << "Seleccione una opci�n: ";
-            cin >> optionMenu;
+        switch (optionMenu)
+        {
+            case 1:
+                createExam(actualUser);
+                break;
+            case 2:
+                deleteExam(actualUser);
+                break;
+            case 3:
+                showExams(actualUser);
+                break;
+            case 4:
+                showQuestionsMenu(actualUser);
+                break;
+        }
 
-            if (optionMenu > 5 || optionMenu < 1) {
-              cout << "Ingrese una opci�n valida.\n";
-              system("pause");
-              system("cls");
-              continue;
-            }
+        /*
+         * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
+         * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
+         * */
 
-            if (optionMenu == 5) {
-               isLogged = false;
-            }
-
-            switch (optionMenu)
-            {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4: 
-                    showQuestionsMenu(actualUser);
-                    break;
-            }
-
-                    /*
-                     * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
-                     * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
-                     * */
-
-        } while (optionMenu != 5);
+    } while (optionMenu != 5);
 }
 
-
-void createExam(User actualUser) {};
-
-void updateExam(User actualUser){};
-
-void deleteExam(User actualUser){};
+void deleteExam(PublicUser actualUser){};

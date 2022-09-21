@@ -11,17 +11,11 @@
 #include <fstream>
 #include "..\\Question\\question.h"
 
-struct listStudent {
-    char userName[40];
-    float grade;
-};
-
 struct Exam {
     char ID[3];
     char name[20];
     time_t date; // https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
     struct Question *questions; //  Convertirlo en dinamico [3] min
-    struct listStudent Student;
     char owner[40]; // admin username
     int numberQuestions;
 };
@@ -30,7 +24,6 @@ struct RegExam {
     char ID[3];
     char name[20];
     time_t date;
-    struct listStudent Student;
     char owner[40];
     int numberQuestions;
 };
