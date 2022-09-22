@@ -13,13 +13,19 @@ void presentExam(PublicUser actualUser){
 
     do{
         system ("cls");
-        cout << ">>>>>>>>>>>>>>>>>>>> PRESENTACION DE EXAMENES <<<<<<<<<<<<<<<<< \n \n";
+        cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx PRESENTACION DE EXAMENES xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \n \n";
     
+        cout << "(ID examen - Nombre examen - Creador examen) \n";
         listExam(actualUser); //Mostrar examenes que aun no ha presentado
 
-        cout << "\nDigite el ID del examen que va a presentar: ";
+        cout << "\nDigite el ID del examen que va a presentar (Digite -1 para salir): ";
 
         cin >> ID;
+
+        if(strcmp(ID, "-1")== 0)
+        {
+            break;
+        }
 
         RegExam exam = getRegExam(ID);
 
@@ -85,7 +91,7 @@ void presentExam(PublicUser actualUser){
 
             grade = ((float)correctAnswers/(float)exam.numberQuestions)*100;
 
-            cout << "===================== REVISION EXAMEN ===================== \n \n";
+            cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx REVISION EXAMEN xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \n \n";
             
             cout << "Su calificacion: " << grade << "% \n";
             for(int i= 0; i < exam.numberQuestions; i++)

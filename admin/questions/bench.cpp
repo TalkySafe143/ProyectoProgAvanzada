@@ -50,7 +50,7 @@ void createBenchQuestion(PublicUser admin){
 
     system("cls");
 
-    cout << "*************** CREAR PREGUNTA ***************" << endl;
+    cout << "======================================== CREAR PREGUNTA ========================================" << endl;
     cout << "Ingrese el ID de la pregunta: ";
     cin >> create.ID;
     cout << "Ingrese el enunciado de la pregunta: ";
@@ -96,7 +96,7 @@ void updateBenchQuestion(PublicUser admin){
 
     while (idSearch != -1) {
         system("cls");
-        cout << "*************** EDITAR PREGUNTA *************** \n \n";
+        cout << "======================================== EDITAR PREGUNTA ======================================== \n \n";
 
         cout << "Digite el ID de la pregunta que desea editar: ";
 
@@ -207,7 +207,7 @@ void deleteBenchQuestion(PublicUser admin){
     int idSearch;
 
     system("cls");
-    cout << "*************** ELIMINAR PREGUNTA *************** \n \n";
+    cout << "======================================== ELIMINAR PREGUNTA ======================================== \n \n";
 
     cout << "Digite el ID de la pregunta que desea eliminar: ";
     cin >> idSearch;
@@ -234,7 +234,7 @@ void showBenchQuestions(PublicUser admin){
     char filename[150];
 
     system("cls");
-    cout << "*************** TODAS LAS PREGUNTAS *************** \n \n";
+    cout << "======================================== TODAS LAS PREGUNTAS ======================================== \n \n";
 
     prepareAdminFileName(admin, filename); 
 
@@ -273,7 +273,7 @@ void getBenchQuestion(PublicUser admin) {
     int idSearch;
 
     system("cls");
-    cout << "*************** BUSCAR PREGUNTA *************** \n \n";
+    cout << "======================================== BUSCAR PREGUNTA ======================================== \n \n";
 
     cout << "Digite el ID de la pregunta que desea buscar: ";
     cin >> idSearch;

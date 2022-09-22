@@ -20,7 +20,7 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
         cout << "Seleccione una opci�n: ";
         cin >> optionMenu;
 
-        if (optionMenu > 5 || optionMenu < 1) {
+        if (optionMenu > 5 || optionMenu < 1) { //Validacion
             cout << "Ingrese una opci�n valida.\n";
             system("pause");
             system("cls");
@@ -46,11 +46,6 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
                 showQuestionsMenu(actualUser);
                 break;
         }
-
-        /*
-         * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
-         * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
-         * */
 
     } while (optionMenu != 5);
 }
@@ -108,7 +103,7 @@ void showExams(PublicUser actualUser){
 void createExam(PublicUser actualUser) {
 
     system("cls");
-    cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< CREAR EXAMEN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
+    cout << "======================================== CREAR EXAMEN ========================================\n\n";
 
     Exam newExam;
 
@@ -294,12 +289,16 @@ void getReports(PublicUser actualUser)
     char ID[4];
 
     system("cls");
-    cout << "============== INFORMES ============== \n \n";
+    cout << "======================================== INFORMES ======================================== \n \n";
 
+    cout << "(ID examen - Nombre examen - Creador examen) \n \n";
     listExamAdmin(actualUser);
 
-    cout << "\n Digite el ID del examen para ver su informe: ";
+    cout << "\n \nDigite el ID del examen para ver su informe: ";
     cin >> ID;
 
+    system("cls");
+
+    cout << "\n(Nombre Estudiante - Nota)\n";
     getReport(ID);
 };
