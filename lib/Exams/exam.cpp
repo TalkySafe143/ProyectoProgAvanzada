@@ -64,7 +64,7 @@ int createExam(Exam newExam){
     examFile.close();
 
     return 0;
-}
+};
 
 int updateExam(char* id, Exam updateExam){
     fstream file("..\\files\\exams.dat", ios::binary | ios::in | ios::out);
@@ -109,7 +109,7 @@ int updateExam(char* id, Exam updateExam){
     file.close();
 
     return 0;
-}
+};
 
 int deleteExam(char* id){
 
@@ -158,16 +158,17 @@ int deleteExam(char* id){
     } else {
         return 0;
     }
-}
+};
 
-Question *searchExam(char ID[3]){
+Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName){
 
     Exam regExam;
     Question regQuestion;
+    Question errorQuestion;
     
     bool Encontro = false;
 
-    ifstream exams("..\\files\\exams.dat", ios::binary);
+    ifstream exams("lib\\files\\exams.dat", ios::binary);
 
     if(!exams)
     {
@@ -180,7 +181,7 @@ Question *searchExam(char ID[3]){
             {
                 if(strcmp(ID, regExam.ID))
                 {
-                    Question *questions = new Question [regExam.numberQuestions];
+                    Question questions [regExam.numberQuestions];
                     for (int i=0; i < regExam.numberQuestions; i++)
                     {
                         if(exams.read((char *)&regQuestion, sizeof(regQuestion)))
@@ -195,6 +196,11 @@ Question *searchExam(char ID[3]){
                         }
                         Encontro = true;
                     }
+                    numberQuestions = regExam.numberQuestions;
+                    strcpy(owner, regExam.owner);
+                    strcpy(examName, regExam.name);
+
+                    exams.close();
                     return questions;
                 }
 
@@ -207,7 +213,13 @@ Question *searchExam(char ID[3]){
                 } 
             }
         }
+        if(!Encontro)
+        {
+            strcpy(errorQuestion.statement, "\0");
+            return &errorQuestion;
+        }
         exams.close();
     }
-}
+};
+
 

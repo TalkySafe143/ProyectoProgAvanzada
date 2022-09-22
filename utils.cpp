@@ -79,3 +79,19 @@ int resizeIdArray(char *&Id, int lenght)
 
     return lenght + 4;
 }
+
+void Mayuscula(char &letra)
+{
+	char letraMin, letramayus;
+	
+	for(int j=0; j<26;j++)
+	{
+	    letraMin='a'+j;
+	    letramayus='A'+j;
+	    if(letra == letraMin)
+	    {
+	        letra = letramayus;
+			break;	
+		}
+	}
+}

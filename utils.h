@@ -19,4 +19,6 @@ void generateUniqueID(char* ID);
 
 int resizeIdArray(char *&Id, int lenght);
 
+void Mayuscula(char &letra);
+
 #endif

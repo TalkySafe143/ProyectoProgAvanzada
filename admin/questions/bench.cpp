@@ -64,8 +64,10 @@ void createBenchQuestion(PublicUser admin){
     cin.getline(create.OptionC, sizeof(create.OptionC));
     cout << "Ingrese la opcion D: ";
     cin.getline(create.OptionD, sizeof(create.OptionD));
-    cout << "Ingrese la respuesta correcta: ";
+    cout << "Ingrese la respuesta correcta (Escoja una letra): ";
     cin >> create.correctOption;
+
+    Mayuscula(create.correctOption);
 
     int result = createQuestion(admin, create);
 
@@ -223,6 +225,9 @@ void deleteBenchQuestion(PublicUser admin){
 void showBenchQuestions(PublicUser admin){
 
     char filename[150];
+
+    system("cls");
+    cout << "*************** TODAS LAS PREGUNTAS *************** \n \n";
 
     prepareAdminFileName(admin, filename); 
 

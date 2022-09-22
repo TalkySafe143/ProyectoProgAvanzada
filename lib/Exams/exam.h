@@ -11,6 +11,7 @@
 #include <fstream>
 #include "..\\Question\\question.h"
 
+
 struct Exam {
     char ID[3];
     char name[20];
@@ -55,6 +56,6 @@ int updateExam(char* id, Exam updateExam);
  * */
 int deleteExam(char* id);
 
-Question *searchExam(char ID[3]);
+Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName);
 
 #endif //EXAM_H

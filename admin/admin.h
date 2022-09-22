@@ -5,6 +5,7 @@
 #include "..\\auth\\auth.h"
 #include "..\\lib\\Exams\\exam.h"
 #include "..\\admin\\questions\\bench.h"
+#include "..\\lib\\Report\\report.h"
 #include <iostream>
 #include <fstream>
 
@@ -26,6 +27,10 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged);
  * Salidas: Ninguna
  * */
 void createExam(PublicUser actualUser);
+
+void listExamAdmin(PublicUser actualUser);
+
+void getReports(PublicUser actualUser);
 
 
 #endif
