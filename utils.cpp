@@ -61,6 +61,8 @@ void generateUniqueID(char* ID) {
     for (int i = 0; i < 3; i++) {
         ID[i] = keys[rand() % ch_MAX];
     }
+
+    ID[3] = '\0';
 }
 
 int resizeIdArray(char *&Id, int lenght)

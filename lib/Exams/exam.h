@@ -12,8 +12,8 @@
 #include "..\\Question\\question.h"
 
 struct Exam {
-    char ID[3];
-    char name[20];
+    char ID[4];
+    char name[50];
     time_t date; // https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
     struct Question *questions; //  Convertirlo en dinamico [3] min
     char owner[40]; // admin username
@@ -21,8 +21,8 @@ struct Exam {
 };
 
 struct RegExam {
-    char ID[3];
-    char name[20];
+    char ID[4];
+    char name[50];
     time_t date;
     char owner[40];
     int numberQuestions;

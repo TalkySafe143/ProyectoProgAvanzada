@@ -63,8 +63,6 @@ void createExam(PublicUser actualUser) {
     do {
         generateUniqueID(newExam.ID);
 
-        cout << newExam.ID << endl;
-
         ifstream readFile("lib\\files\\exams.dat", ios::binary);
 
         if (readFile) {
@@ -149,7 +147,6 @@ void createExam(PublicUser actualUser) {
                     }
                 } while (exist);
 
-                cout << random << endl;
 
                 ifstream file(filename, ios::binary);
 
