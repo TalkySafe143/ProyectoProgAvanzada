@@ -212,10 +212,9 @@ void createExam(PublicUser actualUser) {
                     while (!file.eof()) {
                         if(file.read((char*)&readQuestion, sizeof(readQuestion))) {
                             if (whileCount == random) {
-
-                                        newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
-                                        *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
-                                        alreadyAdded[i] = random;
+                                newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
+                                *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
+                                alreadyAdded[i] = random;
                                 break;
                             }
                             whileCount++;

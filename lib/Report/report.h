@@ -15,8 +15,20 @@ struct infoReport {
     float grade;
 };
 
+/*
+ * Nombre: getReport
+ * Objetivo: Obtener los reportes de un examen
+ * Entradas: El ID del examen a obtener los reportes
+ * Salidas: Ninguna
+*/
 void getReport(char IdExam[4]);
 
+/*
+ * Nombre: createReport
+ * Objetivo: Escribir el reporte entrante a ExamenesPresentados.dat
+ * Entradas: El reporte que se va a escribir
+ * Salidas: Ninguna
+*/
 void createReport(infoReport report);
 
 #endif

@@ -39,27 +39,24 @@ struct RegExam {
 int createExam(Exam newExam);
 
 /*
- * Nombre: updateExam
- * Objetivo: Actualizar un examen
- * Entradas: El ID del examen que se va a actualizar y el objeto del examen que se va a actualizar
- * Salidas: Un entero que representa el codigo de la transaccion
- *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
+ * Nombre: getRegExam
+ * Objetivo: Obtener el registro de un examen en especifico
+ * Entradas: El ID del examen que se va a obtener
+ * Salidas: La estructura del registro del examen, en RegExam.name se guardará:
+ *          "errorFile" -> Fallo en los archivos, "\0" -> Fallo en el proceso (Logica) y si la transaccion es exitosa
+ *          contiene la informacion del registro del examen
  * */
-int updateExam(char* id, Exam updateExam);
-
-/*
- * Nombre: deleteExam
- * Objetivo: Eliminar un examen
- * Entradas: El ID del examen que se va a eliminar
- * Salidas: Un entero que representa el codigo de la transaccion
- *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
- * */
-int deleteExam(char* id);
-
-//Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName);
-
 RegExam getRegExam(char* id);
 
+/*
+ * Nombre: getQuestionsIDsFromExam
+ * Objetivo: Llenar el arreglo de enteros que representan los IDs de las preguntas de un examen
+ * Entradas: Recibe el array de enteros donde se guardarán los IDs y el ID del examen a consultar sus preguntas
+ * Salidas: Ninguna, sin embargo, en el arreglo de enteros que contiene los IDs puede estar en la primera posicion:
+	-1 -> Hay un fallo en el archivo , -2 -> Fallo en el Proceso, si la transaccion salió exitosa va a contener los IDs
+    De las preguntas del examen.
+ *
+*/
 void getQuestionsIDsFromExam(int* IDs, char* ExamId);
 
 #endif //EXAM_H

@@ -17,6 +17,8 @@ void showExamsMenu(PublicUser actualUser);
 
 int main() {
 
+    system("color f");
+
     srand(time(NULL)); // Generar una semilla aleatoria para generateUniqueID() en utils.cpp
 
     setlocale(LC_ALL, ""); // Poner las comas y acentos
@@ -30,6 +32,7 @@ int main() {
     while (option != 3) {
         system("cls");
         cout << "================ Bienvenido al sistema de presentaci�n de ex�menes ================\n\n";
+
         cout << "1. Para entrar con tu usuario!\n";
         cout << "2. Crear un nuevo usuario!\n";
         cout << "3. Salir del sistema\n\n";
@@ -38,6 +41,7 @@ int main() {
 
         if (option < 1 || option > 3) {
             cout << "Por favor, ingrese una opci�n valida\n";
+            system("pause");
             continue;
         }
 

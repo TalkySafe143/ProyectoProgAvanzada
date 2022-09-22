@@ -7,10 +7,6 @@
 #include <string.h>
 #include <fstream>
 
-/*
- * Adrian
- * */
-
 struct Question {
     int ID;
     char statement[500];

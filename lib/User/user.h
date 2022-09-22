@@ -12,10 +12,30 @@ struct User {
     bool isAdmin;
 };
 
+/*
+ * Nombre: registerUser
+ * Objetivo: Registrar a un usuario en el sistema y escribirlo en users.dat
+ * Entradas: Recibe el usuario a registrar
+ * Salidas: Un entero que representa el codigo de la transaccion
+ *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
+*/
 int registerUser(User user);
 
+/*
+ * Nombre: checkUser
+ * Objetivo: Loggear al usuario y escribirlo en actualUser.dat
+ * Entradas: Recibe el usuario a verificar sus credenciales
+ * Salidas: Un entero que representa el codigo de la transaccion
+ *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
+*/
 int checkUser(User user);
 
+/*
+ * Nombre: getActualUser
+ * Objetivo: Obtener el usuario que esta ejecutando el programa (Leyendo actualUser.dat)
+ * Entradas: Ninguna
+ * Salidas: El usuario actual
+*/
 User getActualUser();
 
 #endif
