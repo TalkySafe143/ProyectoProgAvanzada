@@ -7,14 +7,6 @@
 
 using namespace std;
 
-/*
- * Nombre: showExamsMenu
- * Objetivo: Mostrar el menu de los examenes
- * Entradas: El usuario que esta realizando la accion
- * Salidas: Ninguna
- * */
-void showExamsMenu(PublicUser actualUser);
-
 int main() {
 
     system("color f");
@@ -39,7 +31,7 @@ int main() {
         cout << "Seleccione una opci�n: ";
         cin >> option;
 
-        if (option < 1 || option > 3) {
+        if (option < 1 || option > 3) { //Validacion
             cout << "Por favor, ingrese una opci�n valida\n";
             system("pause");
             continue;
@@ -47,8 +39,8 @@ int main() {
 
         switch (option) {
             case 1:
-                actualUser = loginUser();
-                if (actualUser.username[0] == '\0') {
+                actualUser = loginUser(); 
+                if (actualUser.username[0] == '\0') { //Informacion incorrecta o Error en el archivo
                     continue;
                 }
                 isLogged = true;
@@ -60,9 +52,11 @@ int main() {
                 }
                 break;
         }
-        
-        if (option == 3)
-        	return 0;
+
+        if(option == 3)
+        {
+            return 0; //Cerrar programa
+        }
         
         if (isLogged) {
             if (actualUser.isAdmin) {
