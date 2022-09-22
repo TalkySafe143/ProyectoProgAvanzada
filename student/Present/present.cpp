@@ -19,8 +19,9 @@ void presentExam(PublicUser actualUser){
     
         listExam(actualUser); //Mostrar examenes que aun no ha presentado
 
-        cout << endl;
-        cout << "Digite el ID del examen que va a presentar: "; cin >> ID;
+        cout << "\nDigite el ID del examen que va a presentar: ";
+
+        cin >> ID;
 
         p = searchExamById(ID, numberQuestions, owner, examName);  //El apuntador queda en la primera pregunta del examen seleccionado
 

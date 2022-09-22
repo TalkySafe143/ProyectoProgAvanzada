@@ -159,7 +159,7 @@ int deleteExam(char* id){
         return 0;
     }
 };
-
+// vouid
 Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName){
 
     Exam regExam;
@@ -173,6 +173,7 @@ Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *ex
     if(!exams)
     {
         cout << "No se pudo abrir el archivo! \n \n";
+        strcpy(errorQuestion.statement, "errorFile");
     }
     else{
         while(!exams.eof())
@@ -216,10 +217,12 @@ Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *ex
         if(!Encontro)
         {
             strcpy(errorQuestion.statement, "\0");
+            exams.close();
             return &errorQuestion;
         }
-        exams.close();
     }
+
+    exams.close();
 };
 
 
