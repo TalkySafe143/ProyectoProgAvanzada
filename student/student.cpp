@@ -27,7 +27,7 @@ void showStudentMenu(PublicUser actualUser, bool &isLogged){
 
     if(option == 1)
     {
-       // presentExam();
+       presentExam(actualUser);
     }
 
     if(option == 2)
@@ -36,8 +36,6 @@ void showStudentMenu(PublicUser actualUser, bool &isLogged){
     }
 
     }while(option != 2);
-    
-    
 }
 
 void listExam(PublicUser actualUser){
@@ -50,8 +48,10 @@ void listExam(PublicUser actualUser){
     char *p;
     bool Encontro;
     
+    checkIfFileExists("lib\\files\\exams.dat");
+    checkIfFileExists("lib\\files\\ExamenesPresentados.dat");
 
-    ifstream exams("\\lib\\files\\exams.dat", ios::binary);
+    ifstream exams("lib\\files\\exams.dat", ios::binary);
     ifstream presents("lib\\files\\ExamenesPresentados.dat", ios::binary);
     
     if(!presents)

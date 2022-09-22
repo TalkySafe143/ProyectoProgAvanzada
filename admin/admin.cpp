@@ -2,6 +2,59 @@
 
 using namespace std;
 
+void showAdminMenu(PublicUser actualUser, bool &isLogged)
+{
+    int optionMenu;
+
+    do {
+        system("cls");
+        cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
+
+        cout << "�Bienvenido administrador!\n";
+
+        cout << "1. Crear examen.\n";
+        cout << "2. Ver informes.\n";
+        cout << "3. Mostrar examenes creados.\n";
+        cout << "4. Entrar a banco de preguntas.\n\n";
+        cout << "5. Salir.\n\n";
+        cout << "Seleccione una opci�n: ";
+        cin >> optionMenu;
+
+        if (optionMenu > 5 || optionMenu < 1) {
+            cout << "Ingrese una opci�n valida.\n";
+            system("pause");
+            system("cls");
+            continue;
+        }
+
+        if (optionMenu == 5) {
+            isLogged = false;
+        }
+
+        switch (optionMenu)
+        {
+            case 1:
+                createExam(actualUser);
+                break;
+            case 2:
+                getReports(actualUser);
+                break;
+            case 3:
+                showExams(actualUser);
+                break;
+            case 4:
+                showQuestionsMenu(actualUser);
+                break;
+        }
+
+        /*
+         * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
+         * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
+         * */
+
+    } while (optionMenu != 5);
+}
+
 void showExams(PublicUser actualUser){
 
     char filename[150];
@@ -54,6 +107,8 @@ void showExams(PublicUser actualUser){
 };
 
 void createExam(PublicUser actualUser) {
+
+    system("cls");
     cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< CREAR EXAMEN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
 
     Exam newExam;
@@ -117,7 +172,7 @@ void createExam(PublicUser actualUser) {
     Question readQuestion;
 
     if (!file) {
-        cout << "Existio un problema con los archivos, se creo el examen sin preguntas.\n";
+        cout << "Hay un problema con los archivos, se creo el examen sin preguntas.\n";
     } else {
         while (!file.eof()) {
             if (file.read((char*)&readQuestion, sizeof(readQuestion))) {
@@ -198,57 +253,47 @@ void createExam(PublicUser actualUser) {
     }
 };
 
-void showAdminMenu(PublicUser actualUser, bool &isLogged)
-{
-    int optionMenu;
-
-    do {
-        system("cls");
-        cout << "==================== Hola de nuevo, " << actualUser.username << " (Administrador) ====================\n";
-
-        cout << "�Bienvenido administrador!\n";
-
-        cout << "1. Crear examen.\n";
-        cout << "2. Eliminar examen.\n";
-        cout << "3. Mostrar examenes creados.\n";
-        cout << "4. Modificar banco de preguntas.\n\n";
-        cout << "5. Salir.\n\n";
-        cout << "Seleccione una opci�n: ";
-        cin >> optionMenu;
-
-        if (optionMenu > 5 || optionMenu < 1) {
-            cout << "Ingrese una opci�n valida.\n";
-            system("pause");
-            system("cls");
-            continue;
-        }
-
-        if (optionMenu == 5) {
-            isLogged = false;
-        }
-
-        switch (optionMenu)
+void listExamAdmin(PublicUser actualUser){
+    
+    Exam regExam;
+    Question regQuestion;
+    
+    ifstream exams("\\lib\\files\\exams.dat", ios::binary);
+    
+    if(!exams)
+    {
+        cout << "No se pudo abrir el archivo \n";
+    }
+    else{
+        while(!exams.eof())
         {
-            case 1:
-                createExam(actualUser);
-                break;
-            case 2:
-                deleteExam(actualUser);
-                break;
-            case 3:
-                showExams(actualUser);
-                break;
-            case 4:
-                showQuestionsMenu(actualUser);
-                break;
+            if(exams.read((char *)&regExam, sizeof(regExam)))
+            {
+                if(strcmp(regExam.owner, actualUser.username)== 0)
+                {
+                    cout << regExam.ID << " - " << regExam.name << " - " << regExam.owner << endl;
+                }             
+            }
+                
+            for(int i=0; i < regExam.numberQuestions; i++)
+            {
+                    exams.read((char *)&regQuestion, sizeof(regQuestion));
+            }
         }
+        exams.close();
+    }
+};
 
-        /*
-         * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
-         * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
-         * */
+void getReports(PublicUser actualUser)
+{
+    char ID[3];
 
-    } while (optionMenu != 5);
-}
+    system("cls");
+    cout << "============== INFORMES ============== \n \n";
 
-void deleteExam(PublicUser actualUser){};
+    listExamAdmin(actualUser);
+
+    cout << "Digite el ID del examen para ver su informe: "; cin >> ID;
+
+    getReport(ID);
+};

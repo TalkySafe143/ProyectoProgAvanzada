@@ -5,6 +5,7 @@
 #include "..\\lib\\Question\\question.h"
 #include "..\\lib\\Report\\report.h"
 #include "..\\utils.h"
+#include "..\\student\\Present\\present.h"
 
 void showStudentMenu(PublicUser actualUser, bool &isLogged);
 

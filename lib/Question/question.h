@@ -18,7 +18,7 @@ struct Question {
     char OptionB[50];
     char OptionC[50];
     char OptionD[50];
-    char correctOption[50];
+    char correctOption;
 };
 
 /*

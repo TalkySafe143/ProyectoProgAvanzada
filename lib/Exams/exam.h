@@ -11,6 +11,7 @@
 #include <fstream>
 #include "..\\Question\\question.h"
 
+
 struct Exam {
     char ID[4];
     char name[50];
@@ -54,5 +55,7 @@ int updateExam(char* id, Exam updateExam);
  *          1 -> Fallo en los archivos, 2 -> Fallo en el proceso (Logica) y 0 -> Transaccion exitosa
  * */
 int deleteExam(char* id);
+
+Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName);
 
 #endif //EXAM_H

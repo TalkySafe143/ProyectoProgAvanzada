@@ -64,7 +64,7 @@ int createExam(Exam newExam){
     examFile.close();
 
     return 0;
-}
+};
 
 int updateExam(char* id, Exam updateExam){
     fstream file("..\\files\\exams.dat", ios::binary | ios::in | ios::out);
@@ -109,7 +109,7 @@ int updateExam(char* id, Exam updateExam){
     file.close();
 
     return 0;
-}
+};
 
 int deleteExam(char* id){
 
@@ -158,4 +158,71 @@ int deleteExam(char* id){
     } else {
         return 0;
     }
-}
+};
+// vouid
+Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName){
+
+    Exam regExam;
+    Question regQuestion;
+    Question errorQuestion;
+    
+    bool Encontro = false;
+
+    ifstream exams("lib\\files\\exams.dat", ios::binary);
+
+    if(!exams)
+    {
+        cout << "No se pudo abrir el archivo! \n \n";
+        strcpy(errorQuestion.statement, "errorFile");
+    }
+    else{
+        while(!exams.eof())
+        {
+            if(exams.read((char *)&regExam, sizeof(regExam)))
+            {
+                if(strcmp(ID, regExam.ID))
+                {
+                    Question questions [regExam.numberQuestions];
+                    for (int i=0; i < regExam.numberQuestions; i++)
+                    {
+                        if(exams.read((char *)&regQuestion, sizeof(regQuestion)))
+                        {
+                            (questions+i)->ID = regQuestion.ID;
+                            strcpy((questions+i)->statement, regQuestion.statement);
+                            strcpy((questions+i)->OptionA, regQuestion.OptionA);
+                            strcpy((questions+i)->OptionB, regQuestion.OptionB);
+                            strcpy((questions+i)->OptionC, regQuestion.OptionC);
+                            strcpy((questions+i)->OptionD, regQuestion.OptionD);
+                            (questions+i)->correctOption = regQuestion.correctOption;
+                        }
+                        Encontro = true;
+                    }
+                    numberQuestions = regExam.numberQuestions;
+                    strcpy(owner, regExam.owner);
+                    strcpy(examName, regExam.name);
+
+                    exams.close();
+                    return questions;
+                }
+
+                if(!Encontro)
+                {
+                    for(int i=0; i < regExam.numberQuestions; i++)
+                    {
+                        exams.read((char *)&regQuestion, sizeof(regQuestion));
+                    }
+                } 
+            }
+        }
+        if(!Encontro)
+        {
+            strcpy(errorQuestion.statement, "\0");
+            exams.close();
+            return &errorQuestion;
+        }
+    }
+
+    exams.close();
+};
+
+

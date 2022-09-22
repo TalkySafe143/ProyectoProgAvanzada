@@ -8,7 +8,7 @@ void getReport(char IdExam[3]){
     
     infoReport report;
     ifstream examPresent("lib\\files\\ExamenesPresentados.dat", ios::binary);
-     //Funcion para mostrar todos los examenes
+
     if(!examPresent)
     {
         cout << "No se pudo abrir el archivo \n";

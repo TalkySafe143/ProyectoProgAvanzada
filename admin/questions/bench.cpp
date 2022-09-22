@@ -64,8 +64,10 @@ void createBenchQuestion(PublicUser admin){
     cin.getline(create.OptionC, sizeof(create.OptionC));
     cout << "Ingrese la opcion D: ";
     cin.getline(create.OptionD, sizeof(create.OptionD));
-    cout << "Ingrese la respuesta correcta: ";
-    cin.getline(create.correctOption, sizeof(create.correctOption));
+    cout << "Ingrese la respuesta correcta (Escoja una letra): ";
+    cin >> create.correctOption;
+
+    Mayuscula(create.correctOption);
 
     int result = createQuestion(admin, create);
 
@@ -81,7 +83,7 @@ void createBenchQuestion(PublicUser admin){
     system("cls");
 };
 
-void updateBenchQuestion(PublicUser admin){
+void updateBenchQuestion(PublicUser admin){ 
 
     int idSearch = -2, opcion = -2;
 
@@ -162,7 +164,7 @@ void updateBenchQuestion(PublicUser admin){
                 case 7:
                     cout << "Ingrese la nueva opcion correcta: ";
                     cin.ignore();
-                    cin.getline(question.correctOption, sizeof(question.correctOption));
+                    cin >> question.correctOption;
                     break;
                 default:
                     cout << "Opcion invalida \n";
@@ -223,6 +225,9 @@ void deleteBenchQuestion(PublicUser admin){
 void showBenchQuestions(PublicUser admin){
 
     char filename[150];
+
+    system("cls");
+    cout << "*************** TODAS LAS PREGUNTAS *************** \n \n";
 
     prepareAdminFileName(admin, filename); 
 

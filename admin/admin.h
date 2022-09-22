@@ -5,6 +5,7 @@
 #include "..\\auth\\auth.h"
 #include "..\\lib\\Exams\\exam.h"
 #include "..\\admin\\questions\\bench.h"
+#include "..\\lib\\Report\\report.h"
 #include <iostream>
 #include <fstream>
 
@@ -27,12 +28,9 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged);
  * */
 void createExam(PublicUser actualUser);
 
-/*
- * Nombre: deleteExam
- * Objetivo: Pedir el ID para eliminar el examen
- * Entradas: El usuario que esta realizando la accion
- * Salidas: Ninguna
- * */
-void deleteExam(PublicUser actualUser);
+void listExamAdmin(PublicUser actualUser);
+
+void getReports(PublicUser actualUser);
+
 
 #endif
