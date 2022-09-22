@@ -66,7 +66,7 @@ void generateUniqueID(char* ID) {
 
     ID[3] = '\0';
 }
-
+/*
 int resizeIdArray(char *&Id, int lenght)
 {
     char *temp = new char[lenght + 4];
@@ -81,6 +81,7 @@ int resizeIdArray(char *&Id, int lenght)
 
     return lenght + 4;
 }
+*/
 
 void Mayuscula(char &letra)
 {
@@ -96,4 +97,18 @@ void Mayuscula(char &letra)
 			break;	
 		}
 	}
+}
+
+int resizeReportArray(struct infoReport *&arr, int length) {
+    infoReport *temp = new infoReport[length + 1];
+
+    for (int i = 0; i < length; i++) {
+        *(temp + i) = *(arr + i);
+    }
+
+    delete [] arr;
+
+    arr = temp;
+
+    return length + 1;
 }

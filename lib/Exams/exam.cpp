@@ -159,70 +159,84 @@ int deleteExam(char* id){
         return 0;
     }
 };
-// vouid
-Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName){
 
-    Exam regExam;
-    Question regQuestion;
-    Question errorQuestion;
-    
-    bool Encontro = false;
+RegExam getRegExam(char* id) {
 
-    ifstream exams("lib\\files\\exams.dat", ios::binary);
+    RegExam readExam;
+    RegExam errorExam;
 
-    if(!exams)
-    {
-        cout << "No se pudo abrir el archivo! \n \n";
-        strcpy(errorQuestion.statement, "errorFile");
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream file(filename, ios::binary);
+
+    if (!file) {
+        file.close();
+        strcpy(errorExam.name, "errorFile");
+        return errorExam;
     }
-    else{
-        while(!exams.eof())
-        {
-            if(exams.read((char *)&regExam, sizeof(regExam)))
-            {
-                if(strcmp(ID, regExam.ID))
-                {
-                    Question questions [regExam.numberQuestions];
-                    for (int i=0; i < regExam.numberQuestions; i++)
-                    {
-                        if(exams.read((char *)&regQuestion, sizeof(regQuestion)))
-                        {
-                            (questions+i)->ID = regQuestion.ID;
-                            strcpy((questions+i)->statement, regQuestion.statement);
-                            strcpy((questions+i)->OptionA, regQuestion.OptionA);
-                            strcpy((questions+i)->OptionB, regQuestion.OptionB);
-                            strcpy((questions+i)->OptionC, regQuestion.OptionC);
-                            strcpy((questions+i)->OptionD, regQuestion.OptionD);
-                            (questions+i)->correctOption = regQuestion.correctOption;
-                        }
-                        Encontro = true;
-                    }
-                    numberQuestions = regExam.numberQuestions;
-                    strcpy(owner, regExam.owner);
-                    strcpy(examName, regExam.name);
 
-                    exams.close();
-                    return questions;
+    while (!file.eof()) {
+        if (file.read((char*)&readExam, sizeof(readExam))) {
+            if (strcmp(readExam.ID, id) == 0) {
+                file.close();
+                return readExam;
+            } else {
+                Question readQuestion;
+                for (int i = 0; i < readExam.numberQuestions; i++) {
+                    file.read((char*)&readQuestion, sizeof(readQuestion));
                 }
-
-                if(!Encontro)
-                {
-                    for(int i=0; i < regExam.numberQuestions; i++)
-                    {
-                        exams.read((char *)&regQuestion, sizeof(regQuestion));
-                    }
-                } 
             }
         }
-        if(!Encontro)
-        {
-            strcpy(errorQuestion.statement, "\0");
-            exams.close();
-            return &errorQuestion;
+    }
+
+    file.close();
+
+    strcpy(errorExam.name, "\0");
+    return errorExam;
+};
+
+void getQuestionsIDsFromExam(int* IDs, char* ExamId) {
+
+    RegExam readExam;
+    char filename[150];
+
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    checkIfFileExists(filename);
+
+    ifstream file(filename, ios::binary);
+
+    bool found = false;
+
+    if (!file) {
+        *(IDs + 0) = -1;
+    } else {
+        Question readQuestion;
+        while (!file.eof()) {
+            if (file.read((char*)&readExam, sizeof(readExam))) {
+                if (strcmp(readExam.ID, ExamId) == 0) {
+                    for (int i = 0; i < readExam.numberQuestions; i++) {
+                        file.read((char*)&readQuestion, sizeof(readQuestion));
+                        *(IDs + i) = readQuestion.ID;
+                    }
+                    found = true;
+                    break;
+                } else {
+                    for (int i = 0; i < readExam.numberQuestions; i++) {
+                        file.read((char*)&readQuestion, sizeof(readQuestion));
+                    }
+                }
+            }
         }
     }
 
-    exams.close();
-};
+    if (!found)
+        *(IDs + 0) = -2;
 
 
+    file.close();
+}

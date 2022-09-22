@@ -64,10 +64,17 @@ void createBenchQuestion(PublicUser admin){
     cin.getline(create.OptionC, sizeof(create.OptionC));
     cout << "Ingrese la opcion D: ";
     cin.getline(create.OptionD, sizeof(create.OptionD));
-    cout << "Ingrese la respuesta correcta (Escoja una letra): ";
-    cin >> create.correctOption;
 
-    Mayuscula(create.correctOption);
+    do {
+        cout << "Ingrese la respuesta correcta (Escoja una letra): ";
+        cin >> create.correctOption;
+
+        Mayuscula(create.correctOption);
+
+        if (create.correctOption < 'A' || create.correctOption > 'D') {
+            cout << "Porfavor, ingrese una opcion valida\n";
+        }
+    } while (create.correctOption < 'A' || create.correctOption > 'D');
 
     int result = createQuestion(admin, create);
 

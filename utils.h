@@ -6,10 +6,13 @@
 #include ".\\lib\\User\\user.h"
 #include ".\\lib\\Exams\\exam.h"
 #include ".\\auth\\auth.h"
+#include "lib\\Report\\report.h"
 
 void checkIfFileExists(char *name);
 
 int resizeQuestionArray(struct Question *&arr, int length);
+
+int resizeReportArray(struct infoReport *&arr, int length);
 
 int resizeExamArray(struct Exam *&arr, int length);
 
@@ -17,7 +20,7 @@ void prepareAdminFileName(struct PublicUser admin, char* fileName);
 
 void generateUniqueID(char* ID);
 
-int resizeIdArray(char *&Id, int lenght);
+//int resizeIdArray(char *&Id, int lenght);
 
 void Mayuscula(char &letra);
 

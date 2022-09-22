@@ -255,10 +255,10 @@ void createExam(PublicUser actualUser) {
 
 void listExamAdmin(PublicUser actualUser){
     
-    Exam regExam;
+    RegExam regExam;
     Question regQuestion;
     
-    ifstream exams("\\lib\\files\\exams.dat", ios::binary);
+    ifstream exams("lib\\files\\exams.dat", ios::binary);
     
     if(!exams)
     {
@@ -272,28 +272,35 @@ void listExamAdmin(PublicUser actualUser){
                 if(strcmp(regExam.owner, actualUser.username)== 0)
                 {
                     cout << regExam.ID << " - " << regExam.name << " - " << regExam.owner << endl;
-                }             
-            }
-                
-            for(int i=0; i < regExam.numberQuestions; i++)
-            {
+                }
+
+                for(int i=0; i < regExam.numberQuestions; i++)
+                {
                     exams.read((char *)&regQuestion, sizeof(regQuestion));
+                }
+            } else {
+
+                for (int i = 0; i < regExam.numberQuestions; i++) {
+                    exams.read((char *) &regQuestion, sizeof(regQuestion));
+                }
             }
         }
-        exams.close();
     }
+
+    exams.close();
 };
 
 void getReports(PublicUser actualUser)
 {
-    char ID[3];
+    char ID[4];
 
     system("cls");
     cout << "============== INFORMES ============== \n \n";
 
     listExamAdmin(actualUser);
 
-    cout << "Digite el ID del examen para ver su informe: "; cin >> ID;
+    cout << "Digite el ID del examen para ver su informe: ";
+    cin >> ID;
 
     getReport(ID);
 };

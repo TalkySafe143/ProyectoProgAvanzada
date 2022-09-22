@@ -43,14 +43,26 @@ void listExam(PublicUser actualUser){
     RegExam regExam;
     Question regQuestion;
     infoReport regPresent;
-    int lenght = 4;
-    char *IDs = new char [lenght];
+    int lenght = 0;
     char *p;
-    bool Encontro;
-    
-    checkIfFileExists("lib\\files\\exams.dat");
-    checkIfFileExists("lib\\files\\ExamenesPresentados.dat");
+    bool found;
 
+    char filename[150];
+    strcpy(filename, "lib\\files\\exams.dat");
+
+    char filename2[150];
+    strcpy(filename2, "lib\\files\\ExamenesPresentados.dat");
+
+    checkIfFileExists(filename);
+    checkIfFileExists(filename2);
+
+    char userFilename[150];
+
+    strcpy(userFilename, "lib\\files\\");
+    strcat(userFilename, actualUser.username);
+    strcat(userFilename, "examsIDs.txt");
+
+    ofstream IdReg(userFilename);
     ifstream exams("lib\\files\\exams.dat", ios::binary);
     ifstream presents("lib\\files\\ExamenesPresentados.dat", ios::binary);
     
@@ -65,14 +77,13 @@ void listExam(PublicUser actualUser){
             {
                 if(strcmp(regPresent.studentName, actualUser.username)== 0)
                 {
-                    strcat(IDs, regPresent.idExam);
-                    strcat(IDs, "-");
-                    lenght = resizeIdArray(IDs, lenght);
-                    // IDs = 123-4g5-32d-3e4-345
+                    IdReg << regPresent.idExam << "-";
+                    lenght += 4;
                 } 
             }
         }
         presents.close();
+        IdReg.close();
     }
 
     if(!exams)
@@ -80,21 +91,36 @@ void listExam(PublicUser actualUser){
         cout << "No se pudo abrir el archivo \n";
     }
     else{
+
+        ifstream readText(userFilename);
+
+        char IDs[lenght+1];
+
+        readText.getline(IDs, sizeof(IDs) + 1);
+
+        readText.close();
+
         while(!exams.eof())
         {
             if(exams.read((char *)&regExam, sizeof(regExam)))
             {
-                Encontro = false;
-                p = strtok(IDs, "-");
+                found = false;
+
+                char IdsCopy[lenght];
+
+                strcpy(IdsCopy, IDs);
+
+                p = strtok(IdsCopy, "-");
                 while(p != NULL)
                 {
                     if(strcmp(regExam.ID, p)== 0)
                     {
-                        Encontro = true;
+                        found = true;
+                        break;
                     }
                     p = strtok(NULL, "-");
                 }
-                if(!Encontro)
+                if(!found)
                 {
                     cout << regExam.ID << " - " << regExam.name << " - " << regExam.owner << endl;
                 }                      

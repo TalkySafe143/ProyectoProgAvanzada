@@ -56,6 +56,10 @@ int updateExam(char* id, Exam updateExam);
  * */
 int deleteExam(char* id);
 
-Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName);
+//Question *searchExamById(char ID[3], int &numberQuestions, char *owner, char *examName);
+
+RegExam getRegExam(char* id);
+
+void getQuestionsIDsFromExam(int* IDs, char* ExamId);
 
 #endif //EXAM_H
