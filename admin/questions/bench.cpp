@@ -198,7 +198,7 @@ void deleteBenchQuestion(PublicUser admin){
     int idSearch;
 
     system("cls");
-    cout << "*********ELIMINAR PREGUNTA********** \n \n";
+    cout << "*************** ELIMINAR PREGUNTA *************** \n \n";
 
     cout << "Digite el ID de la pregunta que desea eliminar: ";
     cin >> idSearch;
@@ -224,11 +224,9 @@ void showBenchQuestions(PublicUser admin){
 
     char filename[150];
 
-    strcpy(filename, "lib\\files\\");
-    strcat(filename, admin.username);
-    strcat(filename, "Bench.dat");
+    prepareAdminFileName(admin, filename); 
 
-    checkIfFileExists(filename);
+    checkIfFileExists(filename); //Si no exite, la funcion lo crea
 
     ifstream file(filename, ios::binary);
 
@@ -263,7 +261,7 @@ void getBenchQuestion(PublicUser admin) {
     int idSearch;
 
     system("cls");
-    cout << "*********BUSCAR PREGUNTA********** \n \n";
+    cout << "*************** BUSCAR PREGUNTA *************** \n \n";
 
     cout << "Digite el ID de la pregunta que desea buscar: ";
     cin >> idSearch;

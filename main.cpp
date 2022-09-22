@@ -7,9 +7,6 @@
 
 using namespace std;
 
-
-void showQuestionsMenu(PublicUser actualUser);
-
 /*
  * Nombre: showExamsMenu
  * Objetivo: Mostrar el menu de los examenes
