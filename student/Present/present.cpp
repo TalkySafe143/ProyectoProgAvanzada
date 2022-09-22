@@ -69,6 +69,8 @@ void presentExam(PublicUser actualUser){
                 
                 cout << "Digite su respuesta: "; cin >> *(answers+i);
 
+                Mayuscula(*(answers+i));
+
                 cout << "----------------------------------------\n";
 
                 if(*(answers+i) == (questions + i)->correctOption)

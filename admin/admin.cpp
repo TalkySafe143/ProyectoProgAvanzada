@@ -91,7 +91,7 @@ void showExams(PublicUser actualUser){
                     }
 
                     cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< Fin del examen >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
-                    system("pause");
+
                 } else {
                     for (int i = 0; i < readExam.numberQuestions; i++) {
                         file.read((char*)&readQuestion, sizeof(readQuestion));
@@ -102,7 +102,6 @@ void showExams(PublicUser actualUser){
     }
 
     file.close();
-
     system("pause");
 };
 
@@ -299,7 +298,7 @@ void getReports(PublicUser actualUser)
 
     listExamAdmin(actualUser);
 
-    cout << "Digite el ID del examen para ver su informe: ";
+    cout << "\n Digite el ID del examen para ver su informe: ";
     cin >> ID;
 
     getReport(ID);
