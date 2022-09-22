@@ -87,6 +87,8 @@ void showExams(PublicUser actualUser){
 
                     cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< Fin del examen >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
 
+                    system("pause");
+
                 } else {
                     for (int i = 0; i < readExam.numberQuestions; i++) {
                         file.read((char*)&readQuestion, sizeof(readQuestion));
@@ -107,9 +109,11 @@ void createExam(PublicUser actualUser) {
 
     Exam newExam;
 
-    bool alreadyID = false;
+    bool alreadyID;
 
     do {
+        alreadyID = false;
+
         generateUniqueID(newExam.ID);
 
         ifstream readFile("lib\\files\\exams.dat", ios::binary);
@@ -137,9 +141,9 @@ void createExam(PublicUser actualUser) {
     cin.ignore();
     cin.getline(newExam.name, sizeof(newExam.name));
 
-    auto now = chrono::system_clock::now();
+    auto now = chrono::system_clock::now(); // Obtiene la fecha y la informacion de ese instante
 
-    newExam.date = chrono::system_clock::to_time_t(now);
+    newExam.date = chrono::system_clock::to_time_t(now); // Convierte esa fecha en time_t para poder guardarlo y mostrarlo
 
     strcpy(newExam.owner, actualUser.username);
 
@@ -186,7 +190,7 @@ void createExam(PublicUser actualUser) {
 
                 do {
                     exist = false;
-                    random = 1 + (rand() % totalQuestions); //1
+                    random = 1 + (rand() % totalQuestions);
 
                     for (int j = 0; j < limit; j++) {
                         if (alreadyAdded[j] == random) {
@@ -205,7 +209,7 @@ void createExam(PublicUser actualUser) {
                     int whileCount = 1;
                     while (!file.eof()) {
                         if(file.read((char*)&readQuestion, sizeof(readQuestion))) {
-                            if (whileCount == random) {
+                            if (whileCount == random) { // [1]
                                 newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
                                 *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
                                 alreadyAdded[i] = random;

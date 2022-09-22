@@ -61,27 +61,11 @@ void generateUniqueID(char* ID) {
                          '3', '4', '5', '6', '7', '8', '9'};
 
     for (int i = 0; i < 3; i++) {
-        ID[i] = keys[rand() % ch_MAX];
+        ID[i] = keys[rand() % ch_MAX]; // 0 - 34
     }
 
     ID[3] = '\0';
 }
-/*
-int resizeIdArray(char *&Id, int lenght)
-{
-    char *temp = new char[lenght + 4];
-
-    for (int i = 0; i < lenght; i++){
-        *(temp + i) = *(Id + i);
-    }
-
-    delete [] Id;
-
-    Id = temp;
-
-    return lenght + 4;
-}
-*/
 
 void Mayuscula(char &letra)
 {

@@ -61,7 +61,6 @@ int main() {
         if (isLogged) {
             if (actualUser.isAdmin) {
                 showAdminMenu(actualUser, isLogged);
-
             } else {
                 showStudentMenu(actualUser, isLogged);
             }

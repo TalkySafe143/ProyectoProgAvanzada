@@ -29,7 +29,7 @@ int registerUser(User user) {
     if (exist)
         return 1;
 
-    userFile.clear(); // Cuando se lee con fstream para que ya pueda escribir otra vez
+    userFile.clear(); // Esto es para limpiar los errores internos de userFile y que se pueda escribir
 
     userFile.write((char *)&user, sizeof(user));
 

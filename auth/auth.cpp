@@ -7,17 +7,17 @@ int createUser() {
 
     system("cls");
 
-    cout << "======================================== CREAR USUARIO ========================================\n";
+    cout << "====================================== CREAR USUARIO ======================================\n";
 
     cout << "\nPor favor, ingrese un nombre de usuario (40 caracteres): ";
     cin.ignore();
     cin.getline(userToCreate.username, sizeof(userToCreate.username));
-    cout << "\nPor favor, ingrese una contraseï¿½a: ";
+    cout << "\nPor favor, ingrese una contraseña: ";
     cin.getline(userToCreate.password, sizeof(userToCreate.password));
 
     int admin = 3;
     while (admin != 1 && admin != 0) {
-        cout << "ï¿½Eres administrador? [YES -> 1 | NO -> 0]: ";
+        cout << "¿Eres administrador? [YES -> 1 | NO -> 0]: ";
         cin >> admin;
     }
 
@@ -56,7 +56,7 @@ PublicUser loginUser() {
 
     system("cls");
 
-    cout << "======================================== INGRESAR ========================================\n";
+    cout << "====================================== INGRESAR  ======================================\n";
 
     cout << "\nPor favor, ingrese su nombre de usuario: ";
     cin.ignore();
