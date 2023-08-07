@@ -5,27 +5,34 @@ using namespace std;
 
 void presentExam(PublicUser actualUser){
 
-    char ID[3];
-    Question *p;
+    char ID[4];
     bool examExist = false;
-    int numberQuestions = 0;
     char owner[50];
-    char examName[20];
+    char examName[50];
     infoReport report;
 
     do{
         system ("cls");
-        cout << ">>>>>>>>>>>>>>>>>>>> PRESENTACION DE EXAMENES <<<<<<<<<<<<<<<<< \n \n";
+        cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx PRESENTACION DE EXAMENES xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \n \n";
     
+        cout << "(ID examen - Nombre examen - Creador examen) \n";
         listExam(actualUser); //Mostrar examenes que aun no ha presentado
 
-        cout << "\nDigite el ID del examen que va a presentar: ";
+        cout << "\nDigite el ID del examen que va a presentar (Digite -1 para salir): ";
 
         cin >> ID;
 
-        p = searchExamById(ID, numberQuestions, owner, examName);  //El apuntador queda en la primera pregunta del examen seleccionado
+        if(strcmp(ID, "-1")== 0)
+        {
+            break;
+        }
 
-        if(strcmp(p->statement, "\0")!= 0)
+        RegExam exam = getRegExam(ID);
+
+        strcpy(examName, exam.name);
+        strcpy(owner, exam.owner);
+
+        if(strcmp(exam.name, "\0")!= 0)
         {
             examExist = true;
         }
@@ -36,22 +43,43 @@ void presentExam(PublicUser actualUser){
 
         if(examExist)
         {
-            char answers[numberQuestions]; //Para guardar respuestas de todo el examen
+            Question questions[exam.numberQuestions];
+
+            int questionsIDs[exam.numberQuestions];
+
+            getQuestionsIDsFromExam(questionsIDs, ID);
+
+            PublicUser examAdmin;
+
+            strcpy(examAdmin.username, exam.owner);
+            examAdmin.isAdmin = true;
+
+            for (int i = 0; i < exam.numberQuestions; i++)
+                *(questions + i) = getQuestion(examAdmin, *(questionsIDs + i));
+
+
+            char answers[exam.numberQuestions]; //Para guardar respuestas de todo el examen
             int correctAnswers = 0;
             float grade;
 
-            for(int i= 0; i < numberQuestions; i++)
-            {
-                cout << (p+i)->ID << endl;
-                cout << (p+i)->statement << endl;
-                cout << (p+i)->OptionA <<endl;
-                cout << (p+i)->OptionB <<endl;
-                cout << (p+i)->OptionC <<endl;
-                cout << (p+i)->OptionD <<endl;
-                
-                cout << "Digite su respuesta: "; cin >> (answers+i);
+            system("cls");
 
-                if(*(answers+i) == (p+i)->correctOption)
+            for(int i= 0; i < exam.numberQuestions; i++)
+            {
+                cout << "\n\nID de la pregunta: " << (questions + i)->ID << endl;
+                cout << (questions + i)->statement << endl;
+                cout << "A. " << (questions + i)->OptionA <<endl;
+                cout << "B. " << (questions + i)->OptionB <<endl;
+                cout << "C. " << (questions + i)->OptionC <<endl;
+                cout << "D. " << (questions + i)->OptionD <<endl;
+                
+                cout << "Digite su respuesta: "; cin >> *(answers+i);
+
+                Mayuscula(*(answers+i));
+
+                cout << "----------------------------------------\n";
+
+                if(*(answers+i) == (questions + i)->correctOption)
                 {
                     correctAnswers++;
                 }
@@ -61,25 +89,26 @@ void presentExam(PublicUser actualUser){
             system("pause");
             system("cls"); 
 
-            grade = (correctAnswers/numberQuestions)*100;
-            p = searchExamById(ID, numberQuestions, owner, examName); 
+            grade = ((float)correctAnswers/(float)exam.numberQuestions)*100;
 
-            cout << "===================== REVISION EXAMEN ===================== \n \n";
+            cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx REVISION EXAMEN xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \n \n";
             
             cout << "Su calificacion: " << grade << "% \n";
-            for(int i= 0; i < numberQuestions; i++)
+            for(int i= 0; i < exam.numberQuestions; i++)
             {
-                cout << (p+i)->ID << endl;
-                cout << (p+i)->statement << endl;
-                cout << (p+i)->OptionA <<endl;
-                cout << (p+i)->OptionB <<endl;
-                cout << (p+i)->OptionC <<endl;
-                cout << (p+i)->OptionD <<endl;
+                cout << "ID de la pregunta: " << (questions + i)->ID << endl;
+                cout << (questions + i)->statement << endl;
+                cout << "A. " << (questions + i)->OptionA <<endl;
+                cout << "B. " << (questions + i)->OptionB <<endl;
+                cout << "C. " << (questions + i)->OptionC <<endl;
+                cout << "D. " << (questions + i)->OptionD <<endl;
 
-                cout << "La respuesta correcta era: " << (p+i)->correctOption <<endl; 
-                cout << "Su respuesta fue: " << (answers+i) <<endl;
+                cout << "La respuesta correcta era: " << (questions + i)->correctOption <<endl;
+                cout << "Su respuesta fue: " << *(answers+i) <<endl;
+                cout << "------------------------------------------------\n";
             }
-            
+            system("pause");
+            system("cls");
             //CREAR INFORME
             strcpy(report.Admin, owner);
             strcpy(report.Exam, examName);
@@ -89,5 +118,4 @@ void presentExam(PublicUser actualUser){
             createReport(report);
         }
     }while(!examExist);
-    
 };

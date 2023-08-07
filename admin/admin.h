@@ -17,7 +17,12 @@
  * */
 void showExams(PublicUser actualUser);
 
-
+/*
+ * Nombre: showAdminMenu
+ * Objetivo: Mostrar el menu de las acciones de administrador
+ * Entradas: El usuario que esta realizando la accion, Verifica que este loggeado correctamente
+ * Salidas: Ninguna
+*/
 void showAdminMenu(PublicUser actualUser, bool &isLogged);
 
 /*
@@ -28,8 +33,20 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged);
  * */
 void createExam(PublicUser actualUser);
 
+/*
+ * Nombre: listExamAdmin
+ * Objetivo: Muestra la lista de los examenes de un administrador
+ * Entradas: El usuario que esta realizando la accion
+ * Salidas: Ninguna
+*/
 void listExamAdmin(PublicUser actualUser);
 
+/*
+ * Nombre: getReports
+ * Objetivo: Muestra la interfaz para verificar los reportes de un examen
+ * Entradas: El usuario que esta realizando la accion
+ * Salidas: Ninguna
+*/
 void getReports(PublicUser actualUser);
 
 

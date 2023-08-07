@@ -5,8 +5,6 @@
 #include "..\\..\\auth\\auth.h"
 #include "..\\..\\utils.h"
 
-
-
 /*
  * Nombre: showQuestionsMenu
  * Objetivo: Mostrar el menu de preguntas

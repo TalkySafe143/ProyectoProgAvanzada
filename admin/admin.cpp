@@ -20,7 +20,7 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
         cout << "Seleccione una opci�n: ";
         cin >> optionMenu;
 
-        if (optionMenu > 5 || optionMenu < 1) {
+        if (optionMenu > 5 || optionMenu < 1) { //Validacion
             cout << "Ingrese una opci�n valida.\n";
             system("pause");
             system("cls");
@@ -46,11 +46,6 @@ void showAdminMenu(PublicUser actualUser, bool &isLogged)
                 showQuestionsMenu(actualUser);
                 break;
         }
-
-        /*
-         * Para las opciones 1, 2 y 3, se debe editar admin\admin.cpp/.h
-         * Para la opcion 4, se debe editar admin\questions\bench.cpp/.h
-         * */
 
     } while (optionMenu != 5);
 }
@@ -91,7 +86,9 @@ void showExams(PublicUser actualUser){
                     }
 
                     cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< Fin del examen >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+
                     system("pause");
+
                 } else {
                     for (int i = 0; i < readExam.numberQuestions; i++) {
                         file.read((char*)&readQuestion, sizeof(readQuestion));
@@ -102,23 +99,22 @@ void showExams(PublicUser actualUser){
     }
 
     file.close();
-
     system("pause");
 };
 
 void createExam(PublicUser actualUser) {
 
     system("cls");
-    cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<< CREAR EXAMEN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
+    cout << "======================================== CREAR EXAMEN ========================================\n\n";
 
     Exam newExam;
 
-    bool alreadyID = false;
+    bool alreadyID;
 
     do {
-        generateUniqueID(newExam.ID);
+        alreadyID = false;
 
-        cout << newExam.ID << endl;
+        generateUniqueID(newExam.ID);
 
         ifstream readFile("lib\\files\\exams.dat", ios::binary);
 
@@ -145,9 +141,9 @@ void createExam(PublicUser actualUser) {
     cin.ignore();
     cin.getline(newExam.name, sizeof(newExam.name));
 
-    auto now = chrono::system_clock::now();
+    auto now = chrono::system_clock::now(); // Obtiene la fecha y la informacion de ese instante
 
-    newExam.date = chrono::system_clock::to_time_t(now);
+    newExam.date = chrono::system_clock::to_time_t(now); // Convierte esa fecha en time_t para poder guardarlo y mostrarlo
 
     strcpy(newExam.owner, actualUser.username);
 
@@ -194,7 +190,7 @@ void createExam(PublicUser actualUser) {
 
                 do {
                     exist = false;
-                    random = 1 + (rand() % totalQuestions); //1
+                    random = 1 + (rand() % totalQuestions);
 
                     for (int j = 0; j < limit; j++) {
                         if (alreadyAdded[j] == random) {
@@ -204,7 +200,6 @@ void createExam(PublicUser actualUser) {
                     }
                 } while (exist);
 
-                cout << random << endl;
 
                 ifstream file(filename, ios::binary);
 
@@ -214,11 +209,10 @@ void createExam(PublicUser actualUser) {
                     int whileCount = 1;
                     while (!file.eof()) {
                         if(file.read((char*)&readQuestion, sizeof(readQuestion))) {
-                            if (whileCount == random) {
-
-                                        newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
-                                        *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
-                                        alreadyAdded[i] = random;
+                            if (whileCount == random) { // [1]
+                                newExam.numberQuestions = resizeQuestionArray(newExam.questions, newExam.numberQuestions);
+                                *(newExam.questions + (newExam.numberQuestions - 1)) = readQuestion;
+                                alreadyAdded[i] = random;
                                 break;
                             }
                             whileCount++;
@@ -258,10 +252,10 @@ void createExam(PublicUser actualUser) {
 
 void listExamAdmin(PublicUser actualUser){
     
-    Exam regExam;
+    RegExam regExam;
     Question regQuestion;
     
-    ifstream exams("\\lib\\files\\exams.dat", ios::binary);
+    ifstream exams("lib\\files\\exams.dat", ios::binary);
     
     if(!exams)
     {
@@ -275,28 +269,39 @@ void listExamAdmin(PublicUser actualUser){
                 if(strcmp(regExam.owner, actualUser.username)== 0)
                 {
                     cout << regExam.ID << " - " << regExam.name << " - " << regExam.owner << endl;
-                }             
-            }
-                
-            for(int i=0; i < regExam.numberQuestions; i++)
-            {
+                }
+
+                for(int i=0; i < regExam.numberQuestions; i++)
+                {
                     exams.read((char *)&regQuestion, sizeof(regQuestion));
+                }
+            } else {
+
+                for (int i = 0; i < regExam.numberQuestions; i++) {
+                    exams.read((char *) &regQuestion, sizeof(regQuestion));
+                }
             }
         }
-        exams.close();
     }
+
+    exams.close();
 };
 
 void getReports(PublicUser actualUser)
 {
-    char ID[3];
+    char ID[4];
 
     system("cls");
-    cout << "============== INFORMES ============== \n \n";
+    cout << "======================================== INFORMES ======================================== \n \n";
 
+    cout << "(ID examen - Nombre examen - Creador examen) \n \n";
     listExamAdmin(actualUser);
 
-    cout << "Digite el ID del examen para ver su informe: "; cin >> ID;
+    cout << "\n \nDigite el ID del examen para ver su informe: ";
+    cin >> ID;
 
+    system("cls");
+
+    cout << "\n(Nombre Estudiante - Nota)\n";
     getReport(ID);
 };
